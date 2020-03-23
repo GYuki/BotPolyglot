@@ -14,6 +14,11 @@ namespace LogicBlock.Info
         public bool IsFailed => Status == CallStatus.Failed;
         public bool IsProcessed => Status >= CallStatus.Succeeded;
 
+        public RequestInfo()
+        {
+
+        }
+
         public void Success(string message)
         {
             if (IsProcessed)
@@ -32,6 +37,37 @@ namespace LogicBlock.Info
             Status = CallStatus.Failed;
 
             OnFail?.Invoke(message);
+        }
+    }
+
+    public abstract class TypedRequestInfo<RequestType> : RequestInfo, ITypedRequestInfo<RequestType>
+        where RequestType : IOperationRequest
+    {
+        protected TypedRequestInfo()
+            : base()
+        {
+
+        }
+        public RequestType Request
+        {
+            get
+            {
+                return (RequestType)OperationRequest;
+            }
+
+            set
+            {
+                OperationRequest = value;
+            }
+        }
+    }
+
+    public class TextRequestInfo : TypedRequestInfo<ITextOperationRequest>, ITextRequestInfo
+    {
+        public TextRequestInfo()
+            : base()
+        {
+            
         }
     }
 }
