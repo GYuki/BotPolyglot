@@ -4,15 +4,14 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace LogicBlock.Translations.Infrastructure.EntityConfiguration
 {
-    abstract class LanguageEntityTypeConfiguration
+    class LanguageEntityTypeConfiguration<T>
         : IEntityTypeConfiguration<AbstractLanguage>
+        where T: AbstractLanguage
     {
-        protected string _tableName;
-
         public void Configure(EntityTypeBuilder<AbstractLanguage> builder)
         {
             builder
-                .ToTable(_tableName);
+                .ToTable(typeof(T).ToString());
 
             builder
                 .HasKey(l => l.Id);
@@ -30,22 +29,6 @@ namespace LogicBlock.Translations.Infrastructure.EntityConfiguration
                 .WithMany(w => w.Translations)
                 .HasForeignKey(l => l.WordId)
                 .IsRequired();
-        }
-    }
-
-    class RuLanguage : LanguageEntityTypeConfiguration
-    {
-        public RuLanguage()
-        {
-            _tableName = "ru_language";
-        }
-    }
-
-    class EnLanguage : LanguageEntityTypeConfiguration
-    {
-        public EnLanguage()
-        {
-            _tableName = "en_language";
         }
     }
 }
