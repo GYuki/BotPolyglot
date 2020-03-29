@@ -2,9 +2,7 @@ namespace LogicBlock.Info
 {
     public interface IOperationRequest
     {
-        int SenderId { get; }
-
-        string[] Commands { get; }
+        Session.Session Session { get; }
     }
 
     public interface ITextOperationRequest : IOperationRequest
