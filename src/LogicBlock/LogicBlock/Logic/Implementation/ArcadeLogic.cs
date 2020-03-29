@@ -1,11 +1,39 @@
+using System;
+using System.Threading.Tasks;
 using LogicBlock.Info;
+using LogicBlock.Translations.Infrastructure;
+using LogicBlock.Translations.Infrastructure.Repositories;
 
 namespace LogicBlock.Logic
 {
     public class ArcadeLogic : IArcadeLogic
     {
-        public void HandleText(ITextRequestInfo info)
+        private readonly ILanguageRepository _repository;
+
+        public ArcadeLogic(ILanguageRepository repository)
         {
+            _repository = repository;
+        }
+
+        public async Task<IResponseInfo> HandleText(ITextRequestInfo info)
+        {
+            int wordId = info.Request.Session.WordSequence[info.Request.Session.ExpectedWord];
+
+            var translations = await _repository.GetWordTranslationsAsync(wordId);
+
+            if (translations == null || translations.Length == 0)
+            {
+                return new ArcadeResponseInfo("Перевода нет.");
+            }
+
+            if (!Array.Exists(translations, t => t == info.Request.MessageText))
+            {
+                return new ArcadeResponseInfo("Ответ неверный");
+            }
+
+            info.Request.Session.ExpectedWord = info.Request.Session.WordSequence[info.Request.Session.ExpectedWord + 1];
+
+            return new ArcadeResponseInfo("Верно!");
             
         }
     }

@@ -5,7 +5,7 @@ namespace LogicBlock.Logic
 {
     public interface ILogic
     {
-        Task HandleText(ITextRequestInfo info);
+        Task<IResponseInfo> HandleText(ITextRequestInfo info);
     }
 
     public interface ITutorialLogic : ILogic {}
