@@ -16,15 +16,15 @@ namespace LogicBlock.Translations.Infrastructure.Repositories
             _context = context;
         }
 
-        public async Task<string[]> GetWordTranslationsAsync(int wordId)
+        public async Task<AbstractLanguage[]> GetWordTranslationsAsync(int wordId)
         {
             if (wordId <= 0)
                 return null;
             
-            string[] translations = await _context
+            AbstractLanguage[] translations = await _context
                                             .Set<T>()
                                             .Where(l => l.WordId == wordId)
-                                            .Select(l => l.Translation)
+                                            .Include(l => l.Word)
                                             .ToArrayAsync();
 
             return translations;                    

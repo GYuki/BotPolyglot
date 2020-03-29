@@ -5,6 +5,6 @@ namespace LogicBlock.Translations.Infrastructure.Repositories
 {
     public interface ILanguageRepository
     {
-        Task<string[]> GetWordTranslationsAsync(int wordId);
+        Task<AbstractLanguage[]> GetWordTranslationsAsync(int wordId);
     }
 }
