@@ -1,10 +1,11 @@
+using System.Threading.Tasks;
 using LogicBlock.Info;
 
 namespace LogicBlock.Logic
 {
     public interface ILogic
     {
-        void HandleText(ITextRequestInfo info);
+        Task HandleText(ITextRequestInfo info);
     }
 
     public interface ITutorialLogic : ILogic {}
