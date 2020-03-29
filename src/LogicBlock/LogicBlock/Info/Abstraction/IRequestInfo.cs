@@ -4,9 +4,9 @@ namespace LogicBlock.Info
     {
         IOperationRequest OperationRequest { get; }
     
-        void Success(string msg);
+        void Success(IResponseInfo msg);
 
-        void Fail(string msg);
+        void Fail(IResponseInfo msg);
 
         byte Status { get; }
 

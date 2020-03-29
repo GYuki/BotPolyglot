@@ -4,8 +4,8 @@ namespace LogicBlock.Info
 {
     public abstract class RequestInfo : IRequestInfo
     {
-        public Action<string> OnFail;
-        public Action<string> OnSuccess;
+        public Action<IResponseInfo> OnFail;
+        public Action<IResponseInfo> OnSuccess;
         
         public IOperationRequest OperationRequest { get; set; }
         public byte Status { get; protected set; }
@@ -19,7 +19,7 @@ namespace LogicBlock.Info
 
         }
 
-        public void Success(string message)
+        public void Success(IResponseInfo message)
         {
             if (IsProcessed)
                 throw new Exception("Already called Success/Fail");
@@ -29,7 +29,7 @@ namespace LogicBlock.Info
             Status = CallStatus.Succeeded;
         }
 
-        public void Fail(string message)
+        public void Fail(IResponseInfo message)
         {
             if (IsProcessed)
                 throw new Exception("Already called Success/Fail");
