@@ -25,16 +25,17 @@ namespace LogicBlock.Logic
             {
                 return new ArcadeResponseInfo("Перевода нет.");
             }
-
-            if (!Array.Exists(translations, t => t == info.Request.MessageText))
+            
+            foreach (var t in translations)
             {
-                return new ArcadeResponseInfo("Ответ неверный");
+                if (t.Translation == info.Request.MessageText)
+                {
+                    info.Request.Session.ExpectedWord = info.Request.Session.WordSequence[info.Request.Session.ExpectedWord + 1];
+                    return new ArcadeResponseInfo("Верно!", t.Word.Award);
+                }
             }
 
-            info.Request.Session.ExpectedWord = info.Request.Session.WordSequence[info.Request.Session.ExpectedWord + 1];
-
-            return new ArcadeResponseInfo("Верно!");
-            
+            return new ArcadeResponseInfo("Ответ неверный");            
         }
     }
 }
