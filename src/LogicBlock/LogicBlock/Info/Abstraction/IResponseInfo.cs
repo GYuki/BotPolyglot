@@ -4,7 +4,7 @@ namespace LogicBlock.Info
     public interface IResponseInfo
     {
         string Message { get; }
-        Session.Session Session { get; }
+        bool Success { get; }
     }
 
     public interface ITutorialResponseInfo : IResponseInfo

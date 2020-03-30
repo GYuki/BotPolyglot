@@ -5,13 +5,14 @@ namespace LogicBlock.Logic
     public class ArcadeResponseInfo : IArcadeResponseInfo
     {
         public string Message { get; private set; }
-        public Session.Session Session { get; }
+        public bool Success { get; private set; }
         public int Award { get; private set; }
 
-        public ArcadeResponseInfo(string message, int award = 0)
+        public ArcadeResponseInfo(string message, bool success, int award = 0)
         {
             Message = message;
             Award = 0;
+            Success = success;
         }
     }
 }

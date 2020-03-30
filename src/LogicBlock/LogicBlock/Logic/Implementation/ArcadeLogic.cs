@@ -23,7 +23,7 @@ namespace LogicBlock.Logic
 
             if (translations == null || translations.Length == 0)
             {
-                return new ArcadeResponseInfo("Перевода нет.");
+                return new ArcadeResponseInfo("Перевода нет.", false);
             }
             
             foreach (var t in translations)
@@ -31,11 +31,11 @@ namespace LogicBlock.Logic
                 if (t.Translation == info.Request.MessageText)
                 {
                     info.Request.Session.ExpectedWord = info.Request.Session.WordSequence[info.Request.Session.ExpectedWord + 1];
-                    return new ArcadeResponseInfo("Верно!", t.Word.Award);
+                    return new ArcadeResponseInfo("Верно!", true, t.Word.Award);
                 }
             }
 
-            return new ArcadeResponseInfo("Ответ неверный");            
+            return new ArcadeResponseInfo("Ответ неверный", false);            
         }
     }
 }
