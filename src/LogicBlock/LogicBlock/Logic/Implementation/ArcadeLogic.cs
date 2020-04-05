@@ -3,14 +3,15 @@ using System.Threading.Tasks;
 using LogicBlock.Info;
 using LogicBlock.Translations.Infrastructure;
 using LogicBlock.Translations.Infrastructure.Repositories;
+using LogicBlock.Translations.Model;
 
 namespace LogicBlock.Logic
 {
     public class ArcadeLogic : IArcadeLogic
     {
-        private readonly ILanguageRepository _repository;
+        private readonly ILanguageRepository<AbstractLanguage> _repository;
 
-        public ArcadeLogic(ILanguageRepository repository)
+        public ArcadeLogic(ILanguageRepository<AbstractLanguage> repository)
         {
             _repository = repository;
         }
@@ -21,7 +22,7 @@ namespace LogicBlock.Logic
 
             var translations = await _repository.GetWordTranslationsAsync(wordId);
 
-            if (translations == null || translations.Length == 0)
+            if (translations == null || translations.Count == 0)
             {
                 return new ArcadeResponseInfo("Перевода нет.", false);
             }

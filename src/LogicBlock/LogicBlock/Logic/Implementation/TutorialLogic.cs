@@ -1,12 +1,13 @@
+using System.Threading.Tasks;
 using LogicBlock.Info;
 
 namespace LogicBlock.Logic
 {
     public class TutorialLogic : ITutorialLogic
     {
-        public void HandleText(ITextRequestInfo info)
+        public async Task<IResponseInfo> HandleText(ITextRequestInfo info)
         {
-            
+            return null;
         }
     }
 }

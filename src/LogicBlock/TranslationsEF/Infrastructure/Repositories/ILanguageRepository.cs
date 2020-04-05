@@ -1,10 +1,12 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using LogicBlock.Translations.Model;
 
 namespace LogicBlock.Translations.Infrastructure.Repositories
 {
-    public interface ILanguageRepository
+    public interface ILanguageRepository<T>
+        where T : AbstractLanguage
     {
-        Task<AbstractLanguage[]> GetWordTranslationsAsync(int wordId);
+        Task<List<T>> GetWordTranslationsAsync(int wordId);
     }
 }
