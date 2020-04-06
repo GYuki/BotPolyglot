@@ -90,7 +90,7 @@ namespace UnitTest.LogicBlock.Application
             return new TextRequestInfo
             {
                 Request = new TextRequest(
-                    new Session
+                    new ChatSession
                     {
                         ExpectedWord = fakeWord
                     },

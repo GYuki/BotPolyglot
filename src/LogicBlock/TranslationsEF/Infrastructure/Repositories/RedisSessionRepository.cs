@@ -15,14 +15,14 @@ namespace LogicBlock.Session.Repositories
             _database = redis.GetDatabase();
         }
 
-        public async Task<Session> GetSessionAsync(int chatId)
+        public async Task<ChatSession> GetSessionAsync(int chatId)
         {
             var data = await _database.StringGetAsync(chatId.ToString());
 
             if (data.IsNullOrEmpty)
                 return null;
             
-            return JsonConvert.DeserializeObject<Session>(data);
+            return JsonConvert.DeserializeObject<ChatSession>(data);
         }
     }
 }

@@ -4,6 +4,6 @@ namespace LogicBlock.Session.Repositories
 {
     public interface ISessionRepository
     {
-        Task<Session> GetSessionAsync(int chatId);
+        Task<ChatSession> GetSessionAsync(int chatId);
     }
 }
