@@ -5,6 +5,7 @@ namespace LogicBlock.Logic
 {
     public interface ILogic
     {
+        Task<IResponseInfo> StartChat(IStartRequestInfo info);
         Task<IResponseInfo> HandleText(ITextRequestInfo info);
     }
 

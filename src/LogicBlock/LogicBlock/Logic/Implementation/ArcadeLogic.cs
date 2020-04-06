@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using LogicBlock.Info;
 using LogicBlock.Translations.Infrastructure;
@@ -10,10 +11,29 @@ namespace LogicBlock.Logic
     public class ArcadeLogic : IArcadeLogic
     {
         private readonly ILanguageRepository<AbstractLanguage> _repository;
+        private readonly Random _random = new Random();
 
         public ArcadeLogic(ILanguageRepository<AbstractLanguage> repository)
         {
             _repository = repository;
+        }
+
+        public async Task<IResponseInfo> StartChat(IStartRequestInfo info)
+        {
+            int wordsCount = await _repository.GetWordsCountAsync();
+            var wordSequence = Enumerable.Range(0, wordsCount - 1).ToList();
+            for (int i = wordSequence.Count - 1; i >= 0; i--)
+            {
+                var j = _random.Next(i);
+                var buffer = wordSequence[i];
+                wordSequence[i] = wordSequence[j];
+                wordSequence[j] = buffer;
+            }
+            
+            info.Request.Session.ExpectedWord = 0;
+            info.Request.Session.WordSequence = wordSequence;
+
+            return new StartResponseInfo(true);
         }
 
         public async Task<IResponseInfo> HandleText(ITextRequestInfo info)
