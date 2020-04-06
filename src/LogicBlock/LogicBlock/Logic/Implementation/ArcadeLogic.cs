@@ -5,6 +5,7 @@ using LogicBlock.Info;
 using LogicBlock.Translations.Infrastructure;
 using LogicBlock.Translations.Infrastructure.Repositories;
 using LogicBlock.Translations.Model;
+using LogicBlock.Utils.Extensions;
 
 namespace LogicBlock.Logic
 {
@@ -22,13 +23,7 @@ namespace LogicBlock.Logic
         {
             int wordsCount = await _repository.GetWordsCountAsync();
             var wordSequence = Enumerable.Range(0, wordsCount - 1).ToList();
-            for (int i = wordSequence.Count - 1; i >= 0; i--)
-            {
-                var j = _random.Next(i);
-                var buffer = wordSequence[i];
-                wordSequence[i] = wordSequence[j];
-                wordSequence[j] = buffer;
-            }
+            wordSequence.Shuffle();
             
             info.Request.Session.ExpectedWord = 0;
             info.Request.Session.WordSequence = wordSequence;
