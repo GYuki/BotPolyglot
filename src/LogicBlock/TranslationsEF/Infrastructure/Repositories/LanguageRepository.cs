@@ -17,9 +17,9 @@ namespace LogicBlock.Translations.Infrastructure.Repositories
             _context = context;
         }
 
-        public Task<int> GetWordsCountAsync()
+        public async Task<int> GetWordsCountAsync()
         {
-            throw new System.NotImplementedException();
+            return await _context.Words.CountAsync();
         }
 
         public async Task<List<T>> GetWordTranslationsAsync(int wordId)
