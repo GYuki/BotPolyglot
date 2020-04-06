@@ -15,4 +15,16 @@ namespace LogicBlock.Logic
             Success = success;
         }
     }
+
+    public class StartResponseInfo : IStartResponseInfo
+    {
+        public bool Success => _success;
+
+        private readonly bool _success;
+
+        public StartResponseInfo(bool success)
+        {
+            _success = success;
+        }
+    }
 }

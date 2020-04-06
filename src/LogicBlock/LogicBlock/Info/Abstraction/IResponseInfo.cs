@@ -3,8 +3,12 @@ namespace LogicBlock.Info
 {
     public interface IResponseInfo
     {
-        string Message { get; }
         bool Success { get; }
+    }
+
+    public interface IStartResponseInfo : IResponseInfo
+    {
+        
     }
 
     public interface ITutorialResponseInfo : IResponseInfo
@@ -14,6 +18,7 @@ namespace LogicBlock.Info
 
     public interface IArcadeResponseInfo : IResponseInfo
     {
+        string Message { get; }
         int Award { get; }
     }
 }

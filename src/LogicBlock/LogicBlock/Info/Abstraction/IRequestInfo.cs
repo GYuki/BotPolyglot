@@ -14,4 +14,8 @@ namespace LogicBlock.Info
     public interface ITextRequestInfo : ITypedRequestInfo<ITextOperationRequest>
     {
     }
+
+    public interface IStartRequestInfo : ITypedRequestInfo<IStartOperationRequest>
+    {
+    }
 }

@@ -43,4 +43,12 @@ namespace LogicBlock.Info
             
         }
     }
+
+    public class StartRequestInfo : TypedRequestInfo<IStartOperationRequest>, IStartRequestInfo
+    {
+        public StartRequestInfo()
+            : base()
+        {
+        }
+    }
 }

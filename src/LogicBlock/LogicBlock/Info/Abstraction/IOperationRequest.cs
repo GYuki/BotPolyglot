@@ -1,12 +1,19 @@
+using LogicBlock.Session;
+
 namespace LogicBlock.Info
 {
     public interface IOperationRequest
     {
-        Session.Session Session { get; }
+        ChatSession Session { get; }
     }
 
     public interface ITextOperationRequest : IOperationRequest
     {
         string MessageText { get; }
+    }
+
+    public interface IStartOperationRequest : IOperationRequest
+    {
+        
     }
 }
