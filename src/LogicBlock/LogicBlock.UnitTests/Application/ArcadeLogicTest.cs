@@ -7,6 +7,7 @@ using LogicBlock.Session;
 using LogicBlock.Translations.Model;
 using System.Collections.Generic;
 using LogicBlock.Logic;
+using LogicBlock.Session;
 
 namespace UnitTest.LogicBlock.Application
 {
