@@ -9,4 +9,8 @@
     <PackageReference Include="Grpc.AspNetCore" Version="2.27.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\LogicBlock\LogicBlock\LogicBlock.csproj" />
+  </ItemGroup>
+
 </Project>
