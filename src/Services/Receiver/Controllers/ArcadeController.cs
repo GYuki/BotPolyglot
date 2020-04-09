@@ -23,7 +23,7 @@ namespace Receiver.API.Controllers
         [Route("action/{message}")]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         [ProducesResponseType(typeof(ResponseModel), (int)HttpStatusCode.OK)]
-        public async Task<ActionResult<ChatSession>> HandleActionAsync(string message, [FromBody]ChatSession session)
+        public async Task<ActionResult<ResponseModel>> HandleActionAsync(string message, [FromBody]ChatSession session)
         {
             if (string.IsNullOrEmpty(message) || session == null)
                 return BadRequest();
