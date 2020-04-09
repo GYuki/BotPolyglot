@@ -19,12 +19,15 @@ namespace LogicBlock.Logic
     public class StartResponseInfo : IStartResponseInfo
     {
         public bool Success => _success;
+        public string Message => _message;
 
         private readonly bool _success;
+        private readonly string _message;
 
-        public StartResponseInfo(bool success)
+        public StartResponseInfo(bool success, string message)
         {
             _success = success;
+            _message = message;
         }
     }
 }

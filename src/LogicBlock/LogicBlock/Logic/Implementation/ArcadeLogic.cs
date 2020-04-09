@@ -28,7 +28,7 @@ namespace LogicBlock.Logic
             info.Request.Session.ExpectedWord = 0;
             info.Request.Session.WordSequence = wordSequence;
 
-            return new StartResponseInfo(true);
+            return new StartResponseInfo(true, "Success!");
         }
 
         public async Task<IResponseInfo> HandleText(ITextRequestInfo info)
