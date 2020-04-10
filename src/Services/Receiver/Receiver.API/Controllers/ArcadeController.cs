@@ -49,7 +49,7 @@ namespace Receiver.API.Controllers
         [Route("start")]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         [ProducesResponseType(typeof(string), (int)HttpStatusCode.OK)]
-        public async Task<ActionResult> HandleStartAsync([FromBody]ChatSession session)
+        public async Task<ActionResult<ResponseModel>> HandleStartAsync([FromBody]ChatSession session)
         {
             if (session == null)
                 return BadRequest();
