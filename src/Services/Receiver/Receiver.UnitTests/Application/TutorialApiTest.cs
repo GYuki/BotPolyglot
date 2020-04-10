@@ -11,13 +11,13 @@ using Receiver.API.Models;
 namespace UnitTest.Receiver.Application
 {
     [TestFixture]
-    public class ArcadeApiTest
+    public class TutorialApiTest
     {
-        private readonly Mock<IArcadeLogic> _logicMock;
+        private readonly Mock<ITutorialLogic> _tutorialMock;
 
-        public ArcadeApiTest()
+        public TutorialApiTest()
         {
-            _logicMock = new Mock<IArcadeLogic>();
+            _tutorialMock = new Mock<ITutorialLogic>();
         }
 
         [Test]
@@ -30,15 +30,15 @@ namespace UnitTest.Receiver.Application
             var fakeSuccess = true;
             var fakeResponse = MakeFakeResponse(fakeMessage, fakeSuccess);
 
-            _logicMock.Setup(x => x.StartChat(It.IsAny<IStartRequestInfo>()))
+            _tutorialMock.Setup(x => x.StartChat(It.IsAny<IStartRequestInfo>()))
                 .Returns(Task.FromResult((IResponseInfo)fakeResponse));
             
             // Act
-            var arcadeController = new ArcadeController(
-                _logicMock.Object
+            var tutorialController = new TutorialController(
+                _tutorialMock.Object
             );
 
-            var result = await arcadeController.HandleStartAsync(fakeSession);
+            var result = await tutorialController.HandleStartAsync(fakeSession);
 
             // Assert
             Assert.AreEqual((result.Result as OkObjectResult).StatusCode, (int)System.Net.HttpStatusCode.OK);
@@ -56,14 +56,14 @@ namespace UnitTest.Receiver.Application
             var fakeSuccess = true;
             var fakeResponse = MakeFakeResponse(fakeMessage, fakeSuccess);
 
-            _logicMock.Setup(x => x.StartChat(It.IsAny<IStartRequestInfo>()));
+            _tutorialMock.Setup(x => x.StartChat(It.IsAny<IStartRequestInfo>()));
 
             // Act
-            var arcadeController = new ArcadeController(
-                _logicMock.Object
+            var tutorialController = new TutorialController(
+                _tutorialMock.Object
             );
 
-            var result = (await arcadeController.HandleStartAsync(fakeSession)).Result as BadRequestResult;
+            var result = (await tutorialController.HandleStartAsync(fakeSession)).Result as BadRequestResult;
 
             // Assert
             Assert.IsNotNull(result);
@@ -81,15 +81,15 @@ namespace UnitTest.Receiver.Application
             var fakeSuccess = true;
             var fakeResponse = MakeFakeResponse(fakeResponseMessage, fakeSuccess);
 
-            _logicMock.Setup(x => x.HandleText(It.IsAny<ITextRequestInfo>()))
+            _tutorialMock.Setup(x => x.HandleText(It.IsAny<ITextRequestInfo>()))
                 .Returns(Task.FromResult((IResponseInfo)fakeResponse));
             
             // Act
-            var arcadeController = new ArcadeController(
-                _logicMock.Object
+            var tutorialController = new TutorialController(
+                _tutorialMock.Object
             );
 
-            var result = await arcadeController.HandleActionAsync(fakeMessage, fakeSession);
+            var result = await tutorialController.HandleActionAsync(fakeMessage, fakeSession);
 
             // Assert
             Assert.AreEqual((result.Result as OkObjectResult).StatusCode, (int)System.Net.HttpStatusCode.OK);
@@ -108,14 +108,14 @@ namespace UnitTest.Receiver.Application
             var fakeSuccess = true;
             var fakeResponse = MakeFakeResponse(fakeResponseMessage, fakeSuccess);
 
-            _logicMock.Setup(x => x.HandleText(It.IsAny<ITextRequestInfo>()));
+            _tutorialMock.Setup(x => x.HandleText(It.IsAny<ITextRequestInfo>()));
 
             // Act
-            var arcadeController = new ArcadeController(
-                _logicMock.Object
+            var tutorialController = new TutorialController(
+                _tutorialMock.Object
             );
 
-            var result = (await arcadeController.HandleActionAsync(fakeMessage, fakeSession)).Result as BadRequestResult;
+            var result = (await tutorialController.HandleActionAsync(fakeMessage, fakeSession)).Result as BadRequestResult;
 
             // Assert
             Assert.IsNotNull(result);
