@@ -10,7 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\LogicBlock\LogicBlock\LogicBlock.csproj" />
+    <ProjectReference Include="..\..\..\LogicBlock\LogicBlock\LogicBlock.csproj" />
   </ItemGroup>
 
 </Project>
