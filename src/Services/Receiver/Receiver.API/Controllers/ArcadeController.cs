@@ -42,7 +42,7 @@ namespace Receiver.API.Controllers
                Success = result.Success
             };
 
-            return Ok(response)         ;
+            return Ok(response);
         }
 
         [HttpPost]
