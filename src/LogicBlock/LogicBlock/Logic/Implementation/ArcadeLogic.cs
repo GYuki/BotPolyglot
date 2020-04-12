@@ -40,7 +40,12 @@ namespace LogicBlock.Logic
             {
                 if (t.Translation == info.Request.MessageText)
                 {
-                    info.Request.Session.ExpectedWord = info.Request.Session.WordSequence[info.Request.Session.ExpectedWord + 1];
+                    if (info.Request.Session.ExpectedWord == info.Request.Session.WordSequence.Count - 1)
+                    {
+                        await GenerateSequenceAsync(info);
+                    }
+                    else
+                        info.Request.Session.ExpectedWord++;
                     return new ArcadeResponseInfo("Верно!", true, t.Word.Award);
                 }
             }
