@@ -52,7 +52,7 @@ namespace Receiver
                     sqlOpt.EnableRetryOnFailure(maxRetryCount: 15, maxRetryDelay: TimeSpan.FromSeconds(30), errorNumbersToAdd: null);
                 }));
             
-            services.AddTransient(typeof(ILanguageRepository<AbstractLanguage>), typeof(LanguageRepository<RuLanguage>));
+            services.AddTransient(typeof(ILanguageRepository<>), typeof(LanguageRepository<>));
             services.AddTransient<IArcadeLogic, ArcadeLogic>();
             services.AddControllers();
         }
