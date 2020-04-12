@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/src/Services/Receiver/Receiver.csproj",
+                "${workspaceFolder}/src/Services/Receiver/Receiver.API/Receiver.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -19,7 +19,7 @@
             "type": "process",
             "args": [
                 "publish",
-                "${workspaceFolder}/src/Services/Receiver/Receiver.csproj",
+                "${workspaceFolder}/src/Services/Receiver/Receiver.API/Receiver.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -32,7 +32,7 @@
             "args": [
                 "watch",
                 "run",
-                "${workspaceFolder}/src/Services/Receiver/Receiver.csproj",
+                "${workspaceFolder}/src/Services/Receiver/Receiver.API/Receiver.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
