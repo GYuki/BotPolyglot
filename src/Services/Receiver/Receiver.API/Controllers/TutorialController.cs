@@ -19,7 +19,7 @@ namespace Receiver.API.Controllers
             _tutorial = tutorial;
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("action/{message}")]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         [ProducesResponseType(typeof(ResponseModel), (int)HttpStatusCode.OK)]
@@ -45,7 +45,7 @@ namespace Receiver.API.Controllers
             return Ok(response);
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("start")]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         [ProducesResponseType(typeof(ResponseModel), (int)HttpStatusCode.OK)]
