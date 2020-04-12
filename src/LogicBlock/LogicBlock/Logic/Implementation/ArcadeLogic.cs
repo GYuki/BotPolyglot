@@ -9,23 +9,23 @@ using LogicBlock.Utils.Extensions;
 
 namespace LogicBlock.Logic
 {
-    public class ArcadeLogic : IArcadeLogic
+    public class ArcadeLogic : AbstractLogic, IArcadeLogic
     {
-        private readonly ILanguageRepository<AbstractLanguage> _repository;
         private readonly Random _random = new Random();
 
         public ArcadeLogic(ILanguageRepository<AbstractLanguage> repository)
+            : base(repository)
         {
-            _repository = repository;
+
         }
 
-        public async Task<IResponseInfo> StartChat(IStartRequestInfo info)
+        public override async Task<IResponseInfo> StartChat(IStartRequestInfo info)
         {
             await GenerateSequenceAsync(info);
             return new StartResponseInfo(true, "Success!");
         }
 
-        public async Task<IResponseInfo> HandleText(ITextRequestInfo info)
+        public override async Task<IResponseInfo> HandleText(ITextRequestInfo info)
         {
             int wordId = info.Request.Session.WordSequence[info.Request.Session.ExpectedWord];
 
@@ -51,16 +51,6 @@ namespace LogicBlock.Logic
             }
 
             return new ArcadeResponseInfo("Ответ неверный", false);            
-        }
-
-        private async Task GenerateSequenceAsync(IRequestInfo info)
-        {
-            int wordsCount = await _repository.GetWordsCountAsync();
-            var wordSequence = Enumerable.Range(0, wordsCount - 1).ToList();
-            wordSequence.Shuffle();
-            
-            info.OperationRequest.Session.ExpectedWord = 0;
-            info.OperationRequest.Session.WordSequence = wordSequence;
         }
     }
 }
