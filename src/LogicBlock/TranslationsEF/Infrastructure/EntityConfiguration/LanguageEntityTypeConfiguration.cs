@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using LogicBlock.Translations.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -5,10 +6,10 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 namespace LogicBlock.Translations.Infrastructure.EntityConfiguration
 {
     class LanguageEntityTypeConfiguration<T>
-        : IEntityTypeConfiguration<AbstractLanguage>
+        : IEntityTypeConfiguration<T>
         where T: AbstractLanguage
     {
-        public void Configure(EntityTypeBuilder<AbstractLanguage> builder)
+        public void Configure(EntityTypeBuilder<T> builder)
         {
             builder
                 .ToTable(typeof(T).ToString());
@@ -25,10 +26,12 @@ namespace LogicBlock.Translations.Infrastructure.EntityConfiguration
                 .HasMaxLength(255);
             
             builder
-                .HasOne(l => l.Word)
-                .WithMany(w => w.Translations)
-                .HasForeignKey(l => l.WordId)
+                .Property(l => l.WordId)
                 .IsRequired();
+
+            builder
+                .HasIndex(l => l.WordId)
+                .IsUnique(false);
         }
     }
 }

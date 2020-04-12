@@ -6,7 +6,5 @@ namespace LogicBlock.Translations.Model
     {
         public int Id { get; set; }
         public int Award { get; set; }
-
-        public List<AbstractLanguage> Translations { get; set; }
     }
 }
