@@ -21,13 +21,7 @@ namespace LogicBlock.Logic
 
         public async Task<IResponseInfo> StartChat(IStartRequestInfo info)
         {
-            int wordsCount = await _repository.GetWordsCountAsync();
-            var wordSequence = Enumerable.Range(0, wordsCount - 1).ToList();
-            wordSequence.Shuffle();
-            
-            info.Request.Session.ExpectedWord = 0;
-            info.Request.Session.WordSequence = wordSequence;
-
+            await GenerateSequenceAsync(info);
             return new StartResponseInfo(true, "Success!");
         }
 
@@ -52,6 +46,16 @@ namespace LogicBlock.Logic
             }
 
             return new ArcadeResponseInfo("Ответ неверный", false);            
+        }
+
+        private async Task GenerateSequenceAsync(IRequestInfo info)
+        {
+            int wordsCount = await _repository.GetWordsCountAsync();
+            var wordSequence = Enumerable.Range(0, wordsCount - 1).ToList();
+            wordSequence.Shuffle();
+            
+            info.OperationRequest.Session.ExpectedWord = 0;
+            info.OperationRequest.Session.WordSequence = wordSequence;
         }
     }
 }
