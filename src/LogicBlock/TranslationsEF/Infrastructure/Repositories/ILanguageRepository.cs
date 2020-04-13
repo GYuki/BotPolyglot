@@ -4,10 +4,9 @@ using LogicBlock.Translations.Model;
 
 namespace LogicBlock.Translations.Infrastructure.Repositories
 {
-    public interface ILanguageRepository<T>
-        where T : AbstractLanguage
+    public interface ILanguageRepository
     {
         Task<int> GetWordsCountAsync();
-        Task<List<T>> GetWordTranslationsAsync(int wordId);
+        Task<List<ILanguage>> GetWordTranslationsAsync(int wordId);
     }
 }

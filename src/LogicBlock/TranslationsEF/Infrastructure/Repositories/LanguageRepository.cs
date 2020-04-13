@@ -7,8 +7,8 @@ using Microsoft.EntityFrameworkCore;
 namespace LogicBlock.Translations.Infrastructure.Repositories
 {
     public class LanguageRepository<T>
-        : ILanguageRepository<T>
-        where T : AbstractLanguage
+        : ILanguageRepository
+        where T : class, ILanguage
     {
         private readonly TranslationContext _context;
 
@@ -22,7 +22,7 @@ namespace LogicBlock.Translations.Infrastructure.Repositories
             return await _context.Words.CountAsync();
         }
 
-        public async Task<List<T>> GetWordTranslationsAsync(int wordId)
+        public async Task<List<ILanguage>> GetWordTranslationsAsync(int wordId)
         {
             if (wordId <= 0)
                 return null;
@@ -31,7 +31,7 @@ namespace LogicBlock.Translations.Infrastructure.Repositories
                                             .Set<T>()
                                             .Where(l => l.WordId == wordId)
                                             .Include(l => l.Word)
-                                            .ToListAsync();
+                                            .ToListAsync() as List<ILanguage>;
 
             return translations;                    
         }
