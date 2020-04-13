@@ -1,6 +1,13 @@
 namespace LogicBlock.Translations.Model
 {
-    public abstract class AbstractLanguage
+    public interface ILanguage
+    {
+        int Id { get; set; }
+        string Translation { get; set; }
+        Word Word { get; set; }
+        int WordId { get; set; }
+    }
+    public abstract class AbstractLanguage : ILanguage
     {
         public int Id { get; set; }
         public string Translation { get; set; }
