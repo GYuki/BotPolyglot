@@ -13,7 +13,7 @@ namespace LogicBlock.Logic
     {
         private readonly Random _random = new Random();
 
-        public ArcadeLogic(ILanguageRepository<AbstractLanguage> repository)
+        public ArcadeLogic(ILanguageRepository repository)
             : base(repository)
         {
 

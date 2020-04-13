@@ -9,9 +9,9 @@ namespace LogicBlock.Logic
 {
     public abstract class AbstractLogic : IArcadeLogic
     {
-        protected readonly ILanguageRepository<AbstractLanguage> _repository;
+        protected readonly ILanguageRepository _repository;
         
-        public AbstractLogic(ILanguageRepository<AbstractLanguage> repository)
+        public AbstractLogic(ILanguageRepository repository)
         {
             _repository = repository;
         }

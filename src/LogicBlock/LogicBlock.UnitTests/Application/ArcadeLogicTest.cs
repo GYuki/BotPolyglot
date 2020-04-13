@@ -13,11 +13,11 @@ namespace UnitTest.LogicBlock.Application
     [TestFixture]
     public class ArcadeLogicTest
     {
-        private readonly Mock<ILanguageRepository<AbstractLanguage>> _languageRepositoryMock;
+        private readonly Mock<ILanguageRepository> _languageRepositoryMock;
 
         public ArcadeLogicTest()
         {
-            _languageRepositoryMock = new Mock<ILanguageRepository<AbstractLanguage>>();
+            _languageRepositoryMock = new Mock<ILanguageRepository>();
         }
 
         [Test]
@@ -29,7 +29,7 @@ namespace UnitTest.LogicBlock.Application
             var fakeRequest = CreateFakeTextRequest(fakeWord, fakeMessage);
 
             _languageRepositoryMock.Setup(x => x.GetWordTranslationsAsync(It.IsAny<int>()))
-                .Returns(Task.FromResult(new List<AbstractLanguage>()));
+                .Returns(Task.FromResult(new List<ILanguage>()));
 
             // Act
             var arcadeLogic = new ArcadeLogic(
@@ -99,11 +99,11 @@ namespace UnitTest.LogicBlock.Application
             };
         }
     
-        private List<AbstractLanguage> CreateFakeTranslations(string fakeWord)
+        private List<ILanguage> CreateFakeTranslations(string fakeWord)
         {
-            var fakeTranslation = new Mock<AbstractLanguage>().Object;
+            var fakeTranslation = new Mock<ILanguage>().Object;
             fakeTranslation.Translation = fakeWord;
-            return new List<AbstractLanguage>
+            return new List<ILanguage>
             {
                 fakeTranslation
             };
