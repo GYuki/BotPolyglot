@@ -16,6 +16,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Receiver.API.Extensions;
 
 namespace Receiver
 {
@@ -52,7 +53,12 @@ namespace Receiver
                     sqlOpt.EnableRetryOnFailure(maxRetryCount: 15, maxRetryDelay: TimeSpan.FromSeconds(30), errorNumbersToAdd: null);
                 }));
             
-            services.AddTransient(typeof(ILanguageRepository<>), typeof(LanguageRepository<>));
+            string language = Configuration["Language"].FirstCharCapitalize();
+
+            Assembly assem = typeof(ILanguageRepository).Assembly;
+            Type langType = assem.GetType($"LogicBlock.Translations.Infrastructure.Repositories.{language}LanguageRepository");
+            services.AddTransient(typeof(ILanguageRepository), langType);
+
             services.AddTransient<IArcadeLogic, ArcadeLogic>();
             services.AddControllers();
         }
