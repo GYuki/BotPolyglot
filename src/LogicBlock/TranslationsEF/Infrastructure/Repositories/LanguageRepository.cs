@@ -36,4 +36,18 @@ namespace LogicBlock.Translations.Infrastructure.Repositories
             return translations;                    
         }
     }
+
+    public class RuLanguageRepository : LanguageRepository<RuLanguage>
+    {
+        public RuLanguageRepository(TranslationContext context)
+            : base(context)
+        {}
+    }
+
+    public class EnLanguageRepository : LanguageRepository<EnLanguage>
+    {
+        public EnLanguageRepository(TranslationContext context)
+            : base(context)
+        {}
+    }
 }
