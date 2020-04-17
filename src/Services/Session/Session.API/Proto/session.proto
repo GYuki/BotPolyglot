@@ -5,28 +5,32 @@ option csharp_namespace = "GrpcSession";
 package SessionApi;
 
 service Session {
-    rpc GetSessionById(SessionRequest) returns (Empty) {}
+    rpc GetSessionById(GetSessionRequest) returns (SessionRequest) {}
     rpc UpdateSession(SessionRequest) returns (Empty) {}
     rpc DeleteSession(SessionRequest) returns (Empty) {}
 }
 
-message SessionRequest {
-    int32 expectedWord = 1;
+message GetSessionRequest{
     
-    repeated int32 wordSequence = 2;
+    AuthType authType = 1;
+    int32 chatId = 2;
+}
 
-    enum AuthType {
-        Telegram = 0;
-        VK = 1;
-    }
+message SessionRequest {
+    int32 expectedWord = 1;    
+    repeated int32 wordSequence = 2;    
     AuthType authType = 3;
     int32 chatId = 4;
-
-    enum State {
-        Idle = 0;
-    }
-
     State state = 5;
+}
+
+enum AuthType {
+    Telegram = 0;
+    VK = 1;
+}
+
+enum State {
+    Idle = 0;
 }
 
 message Empty {
