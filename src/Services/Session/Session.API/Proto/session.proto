@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+option csharp_namespace = "GrpcSession";
+
+package SessionApi;
+
+service Session {
+    rpc GetSessionById(SessionRequest) returns (Empty) {}
+    rpc UpdateSession(SessionRequest) returns (Empty) {}
+    rpc DeleteSession(SessionRequest) returns (Empty) {}
+}
+
+message SessionRequest {
+    int32 expectedWord = 1;
+    
+    repeated int32 wordSequence = 2;
+
+    enum AuthType {
+        Telegram = 0;
+        VK = 1;
+    }
+    AuthType authType = 3;
+    int32 chatId = 4;
+
+    enum State {
+        Idle = 0;
+    }
+
+    State state = 5;
+}
+
+message Empty {
+
+}
