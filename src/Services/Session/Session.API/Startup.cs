@@ -59,6 +59,7 @@ namespace Session.API
             });
 
             services.AddTransient<ISessionRepository, RedisSessionRepository>();
+            services.AddControllers();
             services.AddOptions();
         }
 
