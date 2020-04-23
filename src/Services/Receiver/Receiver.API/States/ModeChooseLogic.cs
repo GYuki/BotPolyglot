@@ -3,7 +3,7 @@ using LogicBlock.Session;
 
 namespace Receiver.API.States
 {
-    public class ModeChooseLogic : BaseLogic
+    public class ModeChooseLogic : BaseLogic, IModeChooseLogic
     {
         private readonly string[] _modeList = new string[] { "arcade", "tutorial" };
         public override string Act(string message, LogicBlock.Session.ChatSession session)

@@ -3,7 +3,7 @@ using LogicBlock.Session;
 
 namespace Receiver.API.States
 {
-    public class LanguageChooseLogic : BaseLogic
+    public class LanguageChooseLogic : BaseLogic, ILanguageLogic
     {
         private readonly string[] _languageList = new string[] { "en" };
         public override string Act(string message, LogicBlock.Session.ChatSession session)

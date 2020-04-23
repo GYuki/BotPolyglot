@@ -2,7 +2,7 @@ using LogicBlock.Session;
 
 namespace Receiver.API.States
 {
-    public class IdleLogic : BaseLogic
+    public class IdleLogic : BaseLogic, IIdleLogic
     {
         public override string Act(string message, ChatSession session)
         {

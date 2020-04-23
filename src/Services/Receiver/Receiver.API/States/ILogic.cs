@@ -8,4 +8,9 @@ namespace Receiver.API.States
         string Back(ChatSession session);
         string Menu(ChatSession session);
     }
+
+    public interface IIdleLogic : ILogic {}
+    public interface ILanguageLogic : ILogic {}
+    public interface IModeChooseLogic: ILogic {}
+    
 }
