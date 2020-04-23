@@ -1,10 +1,12 @@
+using System.Threading.Tasks;
 using LogicBlock.Session;
+using Receiver.API.Models;
 
 namespace Receiver.API.States
 {
     public interface ILogic
     {
-        string Act(string message, ChatSession session);
+        Task<ResponseModel> Act(string message, ChatSession session);
         string Back(ChatSession session);
         string Menu(ChatSession session);
     }

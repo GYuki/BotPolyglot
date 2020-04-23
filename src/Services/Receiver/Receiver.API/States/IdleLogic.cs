@@ -1,21 +1,30 @@
+using System.Threading.Tasks;
 using LogicBlock.Session;
+using Receiver.API.Models;
 
 namespace Receiver.API.States
 {
     public class IdleLogic : BaseLogic, IIdleLogic
     {
-        public override string Act(string message, ChatSession session)
+        public override Task<ResponseModel> Act(string message, ChatSession session)
         {
+            var result = new ResponseModel();
+
             switch (message)
             {
                 case "language":
                     session.State = State.LanguageChoose;
-                    return "Choose language";
+                    result.Message = "Choose language";
+                    break;
                 case "help":
-                    return "Help info";
+                    result.Message = "Help info";
+                    break;
                 default:
-                    return "Idle message";
+                    result.Message = "Idle message";
+                    break;
             }
+            result.Session = session;
+            return Task.FromResult(result);
         }
     }
 }

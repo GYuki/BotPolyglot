@@ -1,23 +1,29 @@
 using System.Linq;
+using System.Threading.Tasks;
 using LogicBlock.Session;
+using Receiver.API.Models;
 
 namespace Receiver.API.States
 {
     public class LanguageChooseLogic : BaseLogic, ILanguageLogic
     {
         private readonly string[] _languageList = new string[] { "en" };
-        public override string Act(string message, LogicBlock.Session.ChatSession session)
+        public override Task<ResponseModel> Act(string message, LogicBlock.Session.ChatSession session)
         {
+            var result = new ResponseModel();
             if (_languageList.Contains(message))
             {
                 session.Language = message;
                 session.State = State.ModeChoose;
-                return "Choose mode";
+                result.Message = "Choose mode";
             }
             else
             {
-                return "Language list";
+                result.Message = "Language list";
             }
+
+            result.Session = session;
+            return Task.FromResult(result);
         }
 
         public override string Back(ChatSession session)
