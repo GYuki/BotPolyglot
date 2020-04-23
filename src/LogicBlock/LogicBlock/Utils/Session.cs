@@ -15,7 +15,7 @@ namespace LogicBlock.Session
         Idle,
         LanguageChoose,
         ModeChoose,
-        ActionArcade,
-        ActionTutorial
+        ArcadeAction,
+        TutorialAction
     }
 }

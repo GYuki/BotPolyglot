@@ -14,11 +14,11 @@ namespace Receiver.API.States
             switch(message)
             {
                 case "arcade":
-                    session.State = State.ActionArcade;
+                    session.State = State.ArcadeAction;
                     result.Message = "Start arcade";
                     break;
                 case "tutorial":
-                    session.State = State.ActionTutorial;
+                    session.State = State.TutorialAction;
                     result.Message = "Start tutorial";
                     break;
                 case "back":
