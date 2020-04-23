@@ -15,4 +15,5 @@ namespace Receiver.API.States
     public interface ILanguageLogic : ILogic {}
     public interface IModeChooseLogic: ILogic {}
     public interface IArcadeActionLogic: ILogic {}
+    public interface ITutorialActionLogic: ILogic {}
 }
