@@ -38,12 +38,6 @@ namespace Receiver.API.Infrastructure.LogicController
                 _ => null
             };
 
-        public IActionLogic GetActionLogic(State state) =>
-            state switch
-            {
-                State.ArcadeAction => _arcadeAction,
-                State.TutorialAction => _tutorialAction,
-                _ => null
-            };
+        public IActionLogic GetActionLogic(State state) => GetLogic(state) as IActionLogic;
     }
 }
