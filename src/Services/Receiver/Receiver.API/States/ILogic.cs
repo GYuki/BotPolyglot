@@ -14,7 +14,9 @@ namespace Receiver.API.States
     public interface IIdleLogic : ILogic {}
     public interface ILanguageLogic : ILogic {}
     public interface IModeChooseLogic: ILogic {}
-    public interface IActionLogic: ILogic {}
+    public interface IActionLogic: ILogic {
+        Task<string> GetNextTask(ChatSession session);
+    }
     public interface IArcadeActionLogic: IActionLogic {}
     public interface ITutorialActionLogic: IActionLogic {}
 }

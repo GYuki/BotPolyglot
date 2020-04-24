@@ -1,18 +1,18 @@
 using System.Threading.Tasks;
 using LogicBlock.Info;
 using LogicBlock.Logic;
+using LogicBlock.Session;
 using Receiver.API.Models;
 
 namespace Receiver.API.States
 {
-    public class ArcadeActionLogic : BaseLogic, IArcadeActionLogic
+    public class ArcadeActionLogic : BaseActionLogic
     {
-        private readonly IArcadeLogic _arcade;
         public ArcadeActionLogic(IArcadeLogic arcade)
-        {
-            _arcade = arcade;
+            :base(arcade)
+        {       
         }
-        public override async Task<ResponseModel> Act(string message, LogicBlock.Session.ChatSession session)
+        public override async Task<ResponseModel> Act(string message, ChatSession session)
         {
             var result = new ResponseModel();
 
@@ -25,7 +25,7 @@ namespace Receiver.API.States
                     Request = new StartRequest(session)
                 };
 
-                responseInfo = await _arcade.StartChat(info);
+                responseInfo = await _logic.StartChat(info);
             }
             else
             {
@@ -34,7 +34,7 @@ namespace Receiver.API.States
                     Request = new TextRequest(session, message)
                 };
 
-                responseInfo = await _arcade.HandleText(info);
+                responseInfo = await _logic.HandleText(info);
             }
 
             result.Message = responseInfo.Message;

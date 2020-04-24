@@ -21,10 +21,6 @@ namespace Receiver.API.States
                     session.State = State.TutorialAction;
                     result.Message = "Start tutorial";
                     break;
-                case "back":
-                    session.State = State.LanguageChoose;
-                    result.Message = "Choose language";
-                    break;
                 default:
                     result.Message = "Choose mode";
                     break;
