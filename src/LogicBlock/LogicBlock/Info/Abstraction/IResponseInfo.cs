@@ -21,4 +21,9 @@ namespace LogicBlock.Info
     {
         int Award { get; }
     }
+
+    public interface IAfterActionResponseInfo: IResponseInfo
+    {
+        
+    }
 }

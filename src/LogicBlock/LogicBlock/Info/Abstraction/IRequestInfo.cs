@@ -18,4 +18,8 @@ namespace LogicBlock.Info
     public interface IStartRequestInfo : ITypedRequestInfo<IStartOperationRequest>
     {
     }
+
+    public interface IAfterActionRequestInfo : ITypedRequestInfo<IAfterActionOperationRequest>
+    {
+    }
 }

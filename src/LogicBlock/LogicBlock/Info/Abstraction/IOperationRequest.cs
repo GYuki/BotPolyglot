@@ -16,4 +16,9 @@ namespace LogicBlock.Info
     {
         
     }
+
+    public interface IAfterActionOperationRequest : IOperationRequest
+    {
+        
+    }
 }

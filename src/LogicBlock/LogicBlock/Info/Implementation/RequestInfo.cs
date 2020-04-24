@@ -51,4 +51,12 @@ namespace LogicBlock.Info
         {
         }
     }
+
+    public class AfterActionRequestInfo : TypedRequestInfo<IAfterActionOperationRequest>, IAfterActionRequestInfo
+    {
+        public AfterActionRequestInfo()
+            : base()
+        {
+        }
+    }
 }

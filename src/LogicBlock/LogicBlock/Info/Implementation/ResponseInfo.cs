@@ -30,4 +30,19 @@ namespace LogicBlock.Logic
             _message = message;
         }
     }
+
+    public class AfterActionResponseInfo : IAfterActionResponseInfo
+    {
+        public bool Success => _success;
+        public string Message => _message;
+
+        private readonly bool _success;
+        private readonly string _message;
+
+        public AfterActionResponseInfo(bool success, string message)
+        {
+            _success = success;
+            _message = message;
+        }
+    }
 }
