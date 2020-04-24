@@ -5,10 +5,6 @@ option csharp_namespace="GrpcReceiver";
 service Receiver {
     rpc HandleReceiverRequest(ActionRequest) returns (ChatResponse) {}
     rpc HandleAfterAction(ChatRequest) returns (ChatResponse) {}
-    rpc HandleArcadeStart(ChatRequest) returns (ChatResponse) {}
-    rpc HandleArcadeAction(ActionRequest) returns (ChatResponse) {}
-    rpc HandleTutorialStart(ChatRequest) returns (ChatResponse) {}
-    rpc HandleTutorialAction(ActionRequest) returns (ChatResponse) {}
 }
 
 message ActionRequest {
