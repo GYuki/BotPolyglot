@@ -39,11 +39,21 @@ namespace Receiver
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<KestrelServerOptions>(options => {
-                var port = GetDefinedPorts(Configuration);
-                options.Listen(IPAddress.Any, port, listenOptions =>
+                var ports = GetDefinedPorts(Configuration);
+                options.Listen(IPAddress.Any, ports.httpPort, listenOptions =>
                 {
                     listenOptions.Protocols = HttpProtocols.Http1AndHttp2;
                 });
+
+                options.Listen(IPAddress.Any, ports.grpcPort, listenOptions =>
+                {
+                    listenOptions.Protocols = HttpProtocols.Http2;
+                });
+            });
+
+            services.AddGrpc(options => 
+            {
+                options.EnableDetailedErrors = true;
             });
 
             services.AddDbContext<TranslationContext>(opt =>
@@ -77,14 +87,16 @@ namespace Receiver
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapGrpcService<GrpcReceiver.ReceiverService>();
                 endpoints.MapDefaultControllerRoute();
             });
         }
 
-        private int GetDefinedPorts(IConfiguration config)
+        private (int httpPort, int grpcPort) GetDefinedPorts(IConfiguration config)
         {
             var port = config.GetValue("PORT", 80);
-            return port;
+            var grpcPort = config.GetValue("GRPC_PORT", 5001);
+            return (port, grpcPort);
         }
     }
 }

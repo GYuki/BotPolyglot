@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+option csharp_namespace="GrpcReceiver";
+
+service Receiver {
+    rpc HandleArcadeStart(ChatRequest) returns (ChatResponse) {}
+    rpc HandleArcadeAction(ActionRequest) returns (ChatResponse) {}
+    rpc HandleTutorialStart(ChatRequest) returns (ChatResponse) {}
+    rpc HandleTutorialAction(ActionRequest) returns (ChatResponse) {}
+}
+
+message ActionRequest {
+    string message = 1;
+    ChatRequest request = 2;
+}
+
+message ChatRequest {
+    int32 expectedWord = 1;
+    repeated int32 wordSequence = 2;
+}
+
+message ChatResponse {
+    string message = 1;
+    bool success = 2;
+    ChatRequest session = 3;
+}
