@@ -46,7 +46,8 @@ namespace GrpcReceiver
 
             var response = new ChatResponse()
             {
-                Session = MapToChatRequest(chatSession)
+                Session = MapToChatRequest(chatSession),
+                Success = true
             };
 
             switch(action.Message)
@@ -65,6 +66,31 @@ namespace GrpcReceiver
 
             context.Status = new Status(StatusCode.OK, $"Success action");
             return response;
+        }
+
+        public override async Task<ChatResponse> HandleAfterAction(ChatRequest request, ServerCallContext context)
+        {
+            _logger.LogInformation("ReceiverService.HandleAfterAction()");
+
+            ChatSession chatSession = MapToChatSession(request);
+
+            var currentState = _logic.GetActionLogic(chatSession.State);
+
+            if (currentState == null)
+            {
+                context.Status = new Status(StatusCode.Internal, $"State {chatSession.State.ToString()} is not found in receiver logic controller");
+                return null;
+            }
+
+            var result = await currentState.GetNextTask(chatSession);
+            context.Status = new Status(StatusCode.OK, $"Success AfterAction");
+            return new ChatResponse
+            {
+                Message = result,
+                Session = MapToChatRequest(chatSession),
+                Success = true
+            };
+
         }
 
         public override async Task<ChatResponse> HandleArcadeStart(ChatRequest request, ServerCallContext context)
