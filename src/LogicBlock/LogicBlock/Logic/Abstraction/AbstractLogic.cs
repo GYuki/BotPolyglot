@@ -28,5 +28,12 @@ namespace LogicBlock.Logic
             info.OperationRequest.Session.ExpectedWord = 0;
             info.OperationRequest.Session.WordSequence = wordSequence;
         }
+
+        public async Task<IResponseInfo> AfterAction(IAfterActionRequestInfo info)
+        {
+            var result = await _repository.GetNextTask(info.Request.Session.WordSequence[info.Request.Session.ExpectedWord]);
+
+            return new AfterActionResponseInfo(result != null, result);
+        }
     }
 }

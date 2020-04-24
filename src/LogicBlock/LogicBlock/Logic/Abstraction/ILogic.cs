@@ -7,6 +7,7 @@ namespace LogicBlock.Logic
     {
         Task<IResponseInfo> StartChat(IStartRequestInfo info);
         Task<IResponseInfo> HandleText(ITextRequestInfo info);
+        Task<IResponseInfo> AfterAction(IAfterActionRequestInfo info);
     }
 
     public interface ITutorialLogic : ILogic {}
