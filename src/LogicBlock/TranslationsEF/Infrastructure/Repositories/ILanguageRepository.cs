@@ -8,5 +8,6 @@ namespace LogicBlock.Translations.Infrastructure.Repositories
     {
         Task<int> GetWordsCountAsync();
         Task<List<ILanguage>> GetWordTranslationsAsync(int wordId);
+        Task<string> GetNextTask(int wordId);
     }
 }

@@ -35,6 +35,21 @@ namespace LogicBlock.Translations.Infrastructure.Repositories
 
             return translations;                    
         }
+
+        public async Task<string> GetNextTask(int wordId)
+        {
+            if (wordId <= 0)
+                return null;
+            
+            var translation = await _context
+                                            .Set<T>()
+                                            .FirstOrDefaultAsync(l => l.WordId == wordId);
+            
+            if (translation == null)
+                return null;
+            
+            return translation.Translation;
+        }
     }
 
     public class RuLanguageRepository : LanguageRepository<RuLanguage>
