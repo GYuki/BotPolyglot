@@ -6,7 +6,7 @@ using Receiver.API.Models;
 
 namespace Receiver.API.States
 {
-    public class TutorialActionLogic : BaseActionLogic
+    public class TutorialActionLogic : BaseActionLogic, ITutorialActionLogic
     {
         public TutorialActionLogic(ITutorialLogic tutorial)
             :base(tutorial)

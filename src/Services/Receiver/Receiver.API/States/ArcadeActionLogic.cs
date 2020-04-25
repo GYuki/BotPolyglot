@@ -6,7 +6,7 @@ using Receiver.API.Models;
 
 namespace Receiver.API.States
 {
-    public class ArcadeActionLogic : BaseActionLogic
+    public class ArcadeActionLogic : BaseActionLogic, IArcadeActionLogic
     {
         public ArcadeActionLogic(IArcadeLogic arcade)
             :base(arcade)

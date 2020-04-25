@@ -17,6 +17,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Receiver.API.Extensions;
+using Receiver.API.Infrastructure.LogicController;
+using Receiver.API.States;
 
 namespace Receiver
 {
@@ -65,11 +67,21 @@ namespace Receiver
             
             string language = Configuration["Language"].FirstCharCapitalize();
 
+            services.AddTransient<IIdleLogic, IdleLogic>();
+            services.AddTransient<ILanguageLogic, LanguageChooseLogic>();
+            services.AddTransient<IModeChooseLogic, ModeChooseLogic>();
+            services.AddTransient<IArcadeActionLogic, ArcadeActionLogic>();
+            services.AddTransient<ITutorialActionLogic, TutorialActionLogic>();
+
+
+            services.AddTransient<ILogicController, LogicController>();
+
             Assembly assem = typeof(ILanguageRepository).Assembly;
             Type langType = assem.GetType($"LogicBlock.Translations.Infrastructure.Repositories.{language}LanguageRepository");
             services.AddTransient(typeof(ILanguageRepository), langType);
 
             services.AddTransient<IArcadeLogic, ArcadeLogic>();
+            services.AddTransient<ITutorialLogic, TutorialLogic>();
             services.AddControllers();
         }
 
