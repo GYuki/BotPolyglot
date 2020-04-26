@@ -59,12 +59,12 @@ namespace Receiver.API.Controllers
         public async Task<ActionResult<string>> HandleAfterActionAsync([FromBody]ChatSession session)
         {
             if (session == null)
-                return BadRequest("Session is null");
+                return BadRequest();
             
             var currentState = _logic.GetActionLogic(session.State);
 
             if (currentState == null)
-                return BadRequest("Invalid state");
+                return BadRequest();
             
             var result = await currentState.GetNextTask(session);
 
