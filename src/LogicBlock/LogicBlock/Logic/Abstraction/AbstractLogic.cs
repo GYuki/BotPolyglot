@@ -7,7 +7,7 @@ using LogicBlock.Utils.Extensions;
 
 namespace LogicBlock.Logic
 {
-    public abstract class AbstractLogic : IArcadeLogic
+    public abstract class AbstractLogic : ILogic
     {
         protected readonly ILanguageRepository _repository;
         
