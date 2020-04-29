@@ -8,6 +8,10 @@ namespace Session.API.Model
 
     public enum State
     {
-        
+        Idle,
+        LanguageChoose,
+        ModeChoose,
+        ArcadeAction,
+        TutorialAction
     }
 }
