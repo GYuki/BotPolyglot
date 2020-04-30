@@ -6,6 +6,7 @@
 
   <ItemGroup>
    <Protobuf Include="..\..\Services\Session\Session.API\Proto\session.proto" GrpcService="Client" />
+   <Protobuf Include="..\..\Services\Receiver\Receiver.API\Proto\receiver.proto" GrpcService="Client" />
   </ItemGroup>
 
   <ItemGroup>
