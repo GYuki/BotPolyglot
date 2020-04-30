@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+   <Protobuf Include="..\..\Services\Session\Session.API\Proto\session.proto" GrpcService="Client" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="6.0.0" />
     <PackageReference Include="Google.Protobuf" Version="3.11.4" />
     <PackageReference Include="Grpc.Net.Client" Version="2.28.0" />
