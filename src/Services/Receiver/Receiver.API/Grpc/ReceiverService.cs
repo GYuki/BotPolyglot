@@ -12,17 +12,8 @@ namespace GrpcReceiver
 {
     public class ReceiverService : Receiver.ReceiverBase
     {
-        private readonly IArcadeLogic _arcade;
-        private readonly ITutorialLogic _tutorial;
-
         private readonly ILogicController _logic;
         private readonly ILogger<ReceiverService> _logger;
-
-        public ReceiverService(IArcadeLogic arcade, ITutorialLogic tutorial)
-        {
-            _arcade = arcade;
-            _tutorial = tutorial;
-        }
         
         public ReceiverService(ILogicController logic, ILogger<ReceiverService> logger)
         {
@@ -97,7 +88,9 @@ namespace GrpcReceiver
             return new ChatSession
             {
                 ExpectedWord = request.ExpectedWord,
-                WordSequence = request.WordSequence.ToList()
+                WordSequence = request.WordSequence.ToList(),
+                State = (State)request.State,
+                Language = request.Language
             };
         }
 
@@ -105,7 +98,9 @@ namespace GrpcReceiver
         {
             var result = new ChatRequest
             {
-                ExpectedWord = session.ExpectedWord
+                ExpectedWord = session.ExpectedWord,
+                Language = session.Language,
+                State = (int)session.State
             };
 
             session.WordSequence.ForEach(word => result.WordSequence.Add(word));
