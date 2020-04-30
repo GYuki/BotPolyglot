@@ -13,5 +13,6 @@ namespace Session.API.Model
         public int ChatId { get; set; }
 
         public State State { get; set; }
+        public string Language { get; set; }
     }
 }

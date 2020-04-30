@@ -9,6 +9,7 @@ namespace ApiGateways.Telegram.Sender.Models
         public AuthType AuthType { get; set; }
         public int ChatId { get; set; }
         public State State { get; set; }
+        public string Language { get; set; }
     }
 
     public enum AuthType 
