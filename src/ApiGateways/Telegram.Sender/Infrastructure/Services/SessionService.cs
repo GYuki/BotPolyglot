@@ -52,7 +52,8 @@ namespace ApiGateways.Telegram.Sender.Infrastructure.Services
                 AuthType = (GrpcSession.AuthType)sessionData.AuthType,
                 ChatId = sessionData.ChatId,
                 ExpectedWord = sessionData.ExpectedWord,
-                State = (GrpcSession.State)sessionData.State
+                State = (GrpcSession.State)sessionData.State,
+                Language = sessionData.Language
             };
 
             if (sessionData.WordSequence != null)
@@ -70,6 +71,7 @@ namespace ApiGateways.Telegram.Sender.Infrastructure.Services
                 ChatId = request.ChatId,
                 ExpectedWord = request.ExpectedWord,
                 State = (Models.State)request.State,
+                Language = request.Language,
                 WordSequence = request.WordSequence != null ? request.WordSequence.ToList() : default
             };
         }

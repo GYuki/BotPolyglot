@@ -22,6 +22,7 @@ message SessionRequest {
     AuthType authType = 3;
     int32 chatId = 4;
     State state = 5;
+    string language = 6;
 }
 
 enum AuthType {
