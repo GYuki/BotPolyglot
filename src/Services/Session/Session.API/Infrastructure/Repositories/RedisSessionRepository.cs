@@ -16,12 +16,12 @@ namespace Session.API.Infrastructure.Repositories
             _database = redis.GetDatabase();
         }
 
-        public async Task<bool> DeleteSessionAsync(int chatId, AuthType auth)
+        public async Task<bool> DeleteSessionAsync(long chatId, AuthType auth)
         {
             return await _database.KeyDeleteAsync($"{auth.ToString()}_{chatId.ToString()}");
         }
 
-        public async Task<SessionModel> GetSessionAsync(int chatId, AuthType auth)
+        public async Task<SessionModel> GetSessionAsync(long chatId, AuthType auth)
         {
             var data = await _database.StringGetAsync($"{auth.ToString()}_{chatId.ToString()}");
 

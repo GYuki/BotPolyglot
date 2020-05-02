@@ -13,14 +13,14 @@ service Session {
 message GetSessionRequest{
     
     AuthType authType = 1;
-    int32 chatId = 2;
+    int64 chatId = 2;
 }
 
 message SessionRequest {
     int32 expectedWord = 1;    
     repeated int32 wordSequence = 2;    
     AuthType authType = 3;
-    int32 chatId = 4;
+    int64 chatId = 4;
     State state = 5;
     string language = 6;
 }

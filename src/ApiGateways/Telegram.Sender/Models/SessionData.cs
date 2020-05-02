@@ -7,7 +7,7 @@ namespace ApiGateways.Telegram.Sender.Models
         public int ExpectedWord { get; set; }
         public List<int> WordSequence { get; set; }
         public AuthType AuthType { get; set; }
-        public int ChatId { get; set; }
+        public long ChatId { get; set; }
         public State State { get; set; }
         public string Language { get; set; }
     }

@@ -10,7 +10,7 @@ namespace Session.API.Model
 
         public AuthType AuthType { get; set; }
 
-        public int ChatId { get; set; }
+        public long ChatId { get; set; }
 
         public State State { get; set; }
         public string Language { get; set; }

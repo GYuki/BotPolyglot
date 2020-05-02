@@ -20,7 +20,7 @@ namespace ApiGateways.Telegram.Sender.Infrastructure.Services
             _urls = config.Value;
         }
 
-        public async Task<SessionData> GetSessionDataAsync(Models.AuthType authType, int chatId)
+        public async Task<SessionData> GetSessionDataAsync(Models.AuthType authType, long chatId)
         {
             return await GrpcCallerService.CallService(_urls.Session, async channel =>
             {

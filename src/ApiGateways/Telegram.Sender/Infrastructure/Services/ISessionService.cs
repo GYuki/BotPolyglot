@@ -5,7 +5,7 @@ namespace ApiGateways.Telegram.Sender.Infrastructure.Services
 {
     public interface ISessionService
     {
-        Task<SessionData> GetSessionDataAsync(AuthType authType, int chatId);
+        Task<SessionData> GetSessionDataAsync(AuthType authType, long chatId);
         Task UpdateOrCreateSessionAsync(SessionData sessionData);
     }
 }

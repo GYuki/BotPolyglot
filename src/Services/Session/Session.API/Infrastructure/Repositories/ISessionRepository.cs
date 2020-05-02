@@ -5,8 +5,8 @@ namespace Session.API.Infrastructure.Repositories
 {
     public interface ISessionRepository
     {
-        Task<SessionModel> GetSessionAsync(int chatId, AuthType auth);
+        Task<SessionModel> GetSessionAsync(long chatId, AuthType auth);
         Task<SessionModel> UpdateSessionAsync(SessionModel session);
-        Task<bool> DeleteSessionAsync(int chatId, AuthType auth);
+        Task<bool> DeleteSessionAsync(long chatId, AuthType auth);
     }
 }
