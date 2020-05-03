@@ -27,7 +27,7 @@ namespace GrpcSession
                 return MapToSessionRequest(data);
             }
 
-            return new SessionRequest();
+            return null;
         }
 
         public override async Task<Empty> UpdateSession(SessionRequest request, Grpc.Core.ServerCallContext context)
