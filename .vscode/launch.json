@@ -47,6 +47,26 @@
             }
         },
         {
+            "name": ".NET Core Launch (Telegram)",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "buildTelegram",
+            "program": "${workspaceFolder}/src/ApiGateways/Telegram.Sender/bin/Debug/netcoreapp3.1/Telegram.Sender.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/src/ApiGateways/Telegram.Sender",
+            "stopAtEntry": false,
+            "serverReadyAction": {
+                "action": "openExternally",
+                "pattern": "^\\s*Now listening on:\\s+(https?://\\S+)"
+            },
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            },
+            "sourceFileMap": {
+                "/Views": "${workspaceFolder}/Views"
+            }
+        },
+        {
             "name": ".NET Core Attach",
             "type": "coreclr",
             "request": "attach",

@@ -28,6 +28,8 @@ namespace Telegram.Sender
                         .UseStartup<Startup>();
                 })
             .Build();
+
+            host.Run();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
