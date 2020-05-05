@@ -2,8 +2,11 @@ using System.IO;
 using System.Reflection;
 using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Hosting;
+using Microsoft.VisualStudio.TestPlatform.TestHost;
+using Session.API;
 
 namespace Session.FunctionalTests.Base
 {
@@ -13,19 +16,18 @@ namespace Session.FunctionalTests.Base
 
         public TestServer CreateServer()
         {
-            var path = Assembly.GetAssembly(typeof(SessionScenarioBase))
-               .Location;
+            return new TestServer(new WebHostBuilder().UseStartup<Startup>());
+        }
 
-            var host = Host.CreateDefaultBuilder()
-                .UseServiceProviderFactory(new AutofacServiceProviderFactory())
-                .ConfigureWebHostDefaults(webHostBuilder => {
-                    webHostBuilder
-                        .UseContentRoot(Directory.GetCurrentDirectory())
-                        .UseIISIntegration()
-                        .UseStartup<SessionTestStartup>();
-                });
+        public static class Get
+        {
+            public static string GetSession(int authType, long chatId)
+                => $"{ApiUrlBase}?authType={authType}&chatId={chatId}";
+        }
 
-            return host.Build().GetTestServer();
+        public static class Post
+        {
+            public static string Session = $"{ApiUrlBase}/";
         }
     }
 }
