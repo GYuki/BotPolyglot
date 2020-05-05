@@ -18,11 +18,46 @@ namespace Session.FunctionalTests
             using(var server = CreateServer())
             {
                 var content = new StringContent(BuildSession(), UTF8Encoding.UTF8, "application/json");
-                var client = server.CreateClient();
                 var response = await server.CreateClient()
                     .PostAsync(Post.Session, content);
                 
                 response.EnsureSuccessStatusCode();
+            }
+        }
+
+        [Fact]
+        public async Task Get_Session_Should_Return_Ok()
+        {
+            using (var server = CreateServer())
+            {
+                var response = await server.CreateClient()
+                    .GetAsync(Get.GetSession(0, 123));
+                
+                response.EnsureSuccessStatusCode();
+            }
+        }
+
+        [Fact]
+        public async Task Get_Session_Should_Return_Not_Found()
+        {
+            using (var server = CreateServer())
+            {
+                var response = await server.CreateClient()
+                    .GetAsync(Get.GetSession(0, 2));
+
+                Assert.Equal((int)response.StatusCode, (int)System.Net.HttpStatusCode.NotFound);
+            }
+        }
+
+        [Fact]
+        public async Task Get_Session_Should_Return_Bad_Request()
+        {
+            using (var server = CreateServer())
+            {
+                var response = await server.CreateClient()
+                    .GetAsync(Get.GetSession(0, 0));
+
+                Assert.Equal((int)response.StatusCode, (int)System.Net.HttpStatusCode.BadRequest);
             }
         }
 
