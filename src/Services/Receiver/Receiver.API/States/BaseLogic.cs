@@ -14,6 +14,8 @@ namespace Receiver.API.States
         public string Menu(ChatSession session)
         {
             session.State = State.Idle;
+            session.ExpectedWord = 0;
+            session.WordSequence = null;
             return "Idle message";
         }
     }
