@@ -33,6 +33,7 @@ namespace Receiver.API.States
         public override string Back(ChatSession session)
         {
             session.State = State.LanguageChoose;
+            session.Language = null;
             return "Language list";
         }
     }
