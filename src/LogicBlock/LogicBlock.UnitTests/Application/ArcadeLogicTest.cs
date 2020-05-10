@@ -26,7 +26,8 @@ namespace UnitTest.LogicBlock.Application
             // Arrange
             var fakeWord = 0;
             var fakeMessage = "fake";
-            var fakeRequest = CreateFakeTextRequest(fakeWord, fakeMessage);
+            var fakeSequence = new List<int> { 1, 2 };
+            var fakeRequest = CreateFakeTextRequest(fakeWord, fakeMessage, fakeSequence);
 
             _languageRepositoryMock.Setup(x => x.GetWordTranslationsAsync(It.IsAny<int>()))
                 .Returns(Task.FromResult(new List<ILanguage>()));
@@ -48,7 +49,8 @@ namespace UnitTest.LogicBlock.Application
             // Arrange
             var fakeWord = 0;
             var fakeMessage = "fake";
-            var fakeRequest = CreateFakeTextRequest(fakeWord, fakeMessage);
+            var fakeSequence = new List<int> { 1, 2 };
+            var fakeRequest = CreateFakeTextRequest(fakeWord, fakeMessage, fakeSequence);
             var fakeTranslations = CreateFakeTranslations(fakeMessage);
             
             _languageRepositoryMock.Setup(x => x.GetWordTranslationsAsync(It.IsAny<int>()))
@@ -69,7 +71,8 @@ namespace UnitTest.LogicBlock.Application
         {
             var fakeWord = 0;
             var fakeMessage = "fake";
-            var fakeRequest = CreateFakeTextRequest(fakeWord, fakeMessage);
+            var fakeSequence = new List<int>{ 1, 2 };
+            var fakeRequest = CreateFakeTextRequest(fakeWord, fakeMessage, fakeSequence);
             var fakeTranslations = CreateFakeTranslations("wrong");
 
             _languageRepositoryMock.Setup(x => x.GetWordTranslationsAsync(It.IsAny<int>()))
@@ -85,14 +88,15 @@ namespace UnitTest.LogicBlock.Application
             Assert.IsFalse(result.Success);
         }
 
-        private TextRequestInfo CreateFakeTextRequest(int fakeWord, string fakeMessage)
+        private TextRequestInfo CreateFakeTextRequest(int fakeWord, string fakeMessage, List<int> fakeSequence=default)
         {
             return new TextRequestInfo
             {
                 Request = new TextRequest(
                     new ChatSession
                     {
-                        ExpectedWord = fakeWord
+                        ExpectedWord = fakeWord,
+                        WordSequence = fakeSequence
                     },
                     fakeMessage
                 )
@@ -101,8 +105,9 @@ namespace UnitTest.LogicBlock.Application
     
         private List<ILanguage> CreateFakeTranslations(string fakeWord)
         {
-            var fakeTranslation = new Mock<ILanguage>().Object;
+            var fakeTranslation = new EnLanguage();
             fakeTranslation.Translation = fakeWord;
+            fakeTranslation.Word = new Word();
             return new List<ILanguage>
             {
                 fakeTranslation
