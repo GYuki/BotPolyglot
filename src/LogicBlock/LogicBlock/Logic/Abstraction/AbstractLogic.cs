@@ -32,6 +32,8 @@ namespace LogicBlock.Logic
 
         public async Task<IResponseInfo> AfterAction(IAfterActionRequestInfo info)
         {
+            if(info.Request.Session.WordSequence == null || info.Request.Session.ExpectedWord >= info.Request.Session.WordSequence.Count)
+                await GenerateSequenceAsync(info);
             var result = await _repository.GetNextTask(info.Request.Session.WordSequence[info.Request.Session.ExpectedWord]);
 
             return new AfterActionResponseInfo(result != null ? ResponseCodes.OK : ResponseCodes.LogicInternalError , result);

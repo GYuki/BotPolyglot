@@ -160,6 +160,31 @@ namespace UnitTest.LogicBlock.Application
             Assert.AreEqual(result.ResponseCode, ResponseCodes.LogicInternalError);
         }
 
+        [Test]
+        public async Task Handle_Text_After_Action()
+        {
+            // Arrange
+            var fakeWord = 0;
+            var fakeRequest = CreateAfterActionRequest(fakeWord);
+
+            _languageRepositoryMock.Setup(x => x.GetWordsCountAsync())
+                .Returns(Task.FromResult(4));
+            _languageRepositoryMock.Setup(x => x.GetNextTask(It.IsAny<int>()))
+                .Returns(Task.FromResult("test"));
+
+            // Act
+            var arcadeLogic = new ArcadeLogic(
+                _languageRepositoryMock.Object
+            );
+
+            var result = await arcadeLogic.AfterAction(fakeRequest);
+
+            // Assert
+            Assert.AreEqual(result.ResponseCode, ResponseCodes.OK);
+            Assert.NotNull(fakeRequest.Request.Session.WordSequence);
+            Assert.AreEqual(fakeRequest.Request.Session.ExpectedWord, 0);
+        }
+
         private TextRequestInfo CreateFakeTextRequest(int fakeWord, string fakeMessage, List<int> fakeSequence=default)
         {
             return new TextRequestInfo
@@ -171,6 +196,20 @@ namespace UnitTest.LogicBlock.Application
                         WordSequence = fakeSequence
                     },
                     fakeMessage
+                )
+            };
+        }
+
+        private AfterActionRequestInfo CreateAfterActionRequest(int fakeWord, List<int> fakeSequence=default)
+        {
+            return new AfterActionRequestInfo
+            {
+                Request = new AfterActionRequest(
+                    new ChatSession
+                    {
+                        ExpectedWord = fakeWord,
+                        WordSequence = fakeSequence
+                    }
                 )
             };
         }
