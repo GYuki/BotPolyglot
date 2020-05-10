@@ -28,7 +28,7 @@ namespace LogicBlock.Logic
 
         public override async Task<IResponseInfo> HandleText(ITextRequestInfo info)
         {
-            if (info.Request.Session.WordSequence == null)
+            if (info.Request.Session.WordSequence == null || info.Request.Session.ExpectedWord >= info.Request.Session.WordSequence.Count)
                 return new ArcadeResponseInfo("Internal error", ResponseCodes.LogicInternalError);
             int wordId = info.Request.Session.WordSequence[info.Request.Session.ExpectedWord];
 

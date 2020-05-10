@@ -108,6 +108,58 @@ namespace UnitTest.LogicBlock.Application
             Assert.AreEqual(result.ResponseCode, ResponseCodes.LogicInternalError);
         }
 
+        [Test]
+        public async Task Handle_Text_Last_Word_In_Sequence()
+        {
+            // Arrange
+            var fakeWord = 2;
+            var fakeMessage = "fake";
+            var fakeSequence = new List<int> { 1, 2, 3 };
+            var fakeRequest = CreateFakeTextRequest(fakeWord, fakeMessage, fakeSequence);
+            var lastKnownSequence = new List<int>(fakeSequence);
+
+            var fakeTranslations = CreateFakeTranslations(fakeMessage);
+
+            _languageRepositoryMock.Setup(x => x.GetWordsCountAsync())
+                .Returns(Task.FromResult(4));
+            
+            _languageRepositoryMock.Setup(x => x.GetWordTranslationsAsync(It.IsAny<int>()))
+                .Returns(Task.FromResult(fakeTranslations));
+
+            // Act
+            var arcadeLogic = new ArcadeLogic(
+                _languageRepositoryMock.Object
+            );
+
+            var result = await arcadeLogic.HandleText(fakeRequest);
+
+            // Assert
+            Assert.AreEqual(result.ResponseCode, ResponseCodes.OK);
+            Assert.AreNotEqual(lastKnownSequence, fakeRequest.Request.Session.WordSequence);
+            Assert.AreEqual(fakeRequest.Request.Session.ExpectedWord, 0);
+        }
+
+        [Test]
+        public async Task Handle_Text_Word_Index_More_Than_Sequence_Count()
+        {
+            // Arrange
+            var fakeWord = 2;
+            var fakeMessage = "fake";
+            var fakeSequence = new List<int> { 1, 2 };
+            var fakeRequest = CreateFakeTextRequest(fakeWord, fakeMessage, fakeSequence);
+            var lastKnownSequence = new List<int>(fakeSequence);            
+            
+            // Act
+            var arcadeLogic = new ArcadeLogic(
+                _languageRepositoryMock.Object
+            );
+
+            var result = await arcadeLogic.HandleText(fakeRequest);
+
+            // Assert
+            Assert.AreEqual(result.ResponseCode, ResponseCodes.LogicInternalError);
+        }
+
         private TextRequestInfo CreateFakeTextRequest(int fakeWord, string fakeMessage, List<int> fakeSequence=default)
         {
             return new TextRequestInfo
