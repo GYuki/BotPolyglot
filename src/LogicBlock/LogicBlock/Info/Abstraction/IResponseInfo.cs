@@ -3,7 +3,7 @@ namespace LogicBlock.Info
 {
     public interface IResponseInfo
     {
-        bool Success { get; }
+        byte ResponseCode { get; }
         string Message { get; }
     }
 

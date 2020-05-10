@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using LogicBlock.Info;
 using LogicBlock.Logic;
 using LogicBlock.Session;
+using LogicBlock.Utils;
 using Receiver.API.Models;
 
 namespace Receiver.API.States
@@ -39,7 +40,7 @@ namespace Receiver.API.States
 
             result.Message = responseInfo.Message;
             result.Session = session;
-            result.Success = responseInfo.Success;
+            result.Success = responseInfo.ResponseCode == ResponseCodes.OK;
             return result;
         }
     }

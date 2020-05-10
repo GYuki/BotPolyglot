@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using LogicBlock.Info;
 using LogicBlock.Translations.Infrastructure.Repositories;
 using LogicBlock.Translations.Model;
+using LogicBlock.Utils;
 using LogicBlock.Utils.Extensions;
 
 namespace LogicBlock.Logic
@@ -33,7 +34,7 @@ namespace LogicBlock.Logic
         {
             var result = await _repository.GetNextTask(info.Request.Session.WordSequence[info.Request.Session.ExpectedWord]);
 
-            return new AfterActionResponseInfo(result != null, result);
+            return new AfterActionResponseInfo(result != null ? ResponseCodes.OK : ResponseCodes.LogicInternalError , result);
         }
     }
 }

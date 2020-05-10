@@ -7,6 +7,7 @@ using LogicBlock.Session;
 using LogicBlock.Translations.Model;
 using System.Collections.Generic;
 using LogicBlock.Logic;
+using LogicBlock.Utils;
 
 namespace UnitTest.LogicBlock.Application
 {
@@ -40,7 +41,7 @@ namespace UnitTest.LogicBlock.Application
             var result = await arcadeLogic.HandleText(fakeRequest);
 
             // Assert
-            Assert.IsFalse(result.Success);
+            Assert.AreEqual(result.ResponseCode, ResponseCodes.NoAsnwers);
         }
 
         [Test]
@@ -63,7 +64,7 @@ namespace UnitTest.LogicBlock.Application
             var result = await arcadeLogic.HandleText(fakeRequest);
 
             // Assert
-            Assert.IsTrue(result.Success);
+            Assert.AreEqual(result.ResponseCode, ResponseCodes.OK);
         }
 
         [Test]
@@ -85,7 +86,26 @@ namespace UnitTest.LogicBlock.Application
             var result = await arcadeLogic.HandleText(fakeRequest);
 
             // Assert
-            Assert.IsFalse(result.Success);
+            Assert.AreEqual(result.ResponseCode, ResponseCodes.WrongAnswer);
+        }
+
+        [Test]
+        public async Task Handle_Text_Empty_Word_Sequence()
+        {
+            // Arrange
+            var fakeWord = 0;
+            var fakeMessage = "fake";
+            var fakeRequest = CreateFakeTextRequest(fakeWord, fakeMessage);
+
+            // Act
+            var arcadeLogic = new ArcadeLogic(
+                _languageRepositoryMock.Object
+            );
+
+            var result = await arcadeLogic.HandleText(fakeRequest);
+
+            // Assert
+            Assert.AreEqual(result.ResponseCode, ResponseCodes.LogicInternalError);
         }
 
         private TextRequestInfo CreateFakeTextRequest(int fakeWord, string fakeMessage, List<int> fakeSequence=default)

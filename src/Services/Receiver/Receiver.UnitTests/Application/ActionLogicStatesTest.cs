@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using LogicBlock.Info;
 using LogicBlock.Logic;
 using LogicBlock.Session;
+using LogicBlock.Utils;
 using Moq;
 using NUnit.Framework;
 using Receiver.API.States;
@@ -119,12 +120,12 @@ namespace UnitTest.Receiver.Application
 
         private IResponseInfo GetFakeResponse()
         {
-            return new ArcadeResponseInfo("message", true);
+            return new ArcadeResponseInfo("message", ResponseCodes.OK);
         }
 
         private IResponseInfo GetFakeStartResponse()
         {
-            return new StartResponseInfo(true, "response");
+            return new StartResponseInfo(ResponseCodes.OK, "response");
         }
     }
 }
