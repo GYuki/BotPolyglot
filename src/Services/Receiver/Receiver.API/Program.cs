@@ -4,10 +4,13 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Autofac.Extensions.DependencyInjection;
+using LogicBlock.Translations.Infrastructure;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Receiver.API.Extensions;
 
 namespace Receiver
 {
@@ -27,7 +30,17 @@ namespace Receiver
                 })
             .Build();
 
-            CreateHostBuilder(args).Build().Run();
+            host.MigrateDbContext<TranslationContext>((context, services) =>
+            {
+                var env = services.GetService<IHostEnvironment>();
+                var logger = services.GetService<ILogger<TranslationContextSeed>>();
+                
+                new TranslationContextSeed()
+                    .SeedAsync(context, env.ContentRootPath, logger)
+                    .Wait();
+            });
+
+            host.Run();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>

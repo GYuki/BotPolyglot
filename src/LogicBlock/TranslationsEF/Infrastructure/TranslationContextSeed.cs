@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -34,9 +33,11 @@ namespace LogicBlock.Translations.Infrastructure
 
                 if (!context.Set<EnLanguage>().Any())
                 {
-                    await context.Set<EnLanguage>().AddRangeAsync(
-                        GetEnglishTranslations(contentRootPath, context, logger)
-                    );
+                    var englishSet = GetEnglishTranslations(contentRootPath, context, logger);
+                    if (englishSet != null)
+                        await context.Set<EnLanguage>().AddRangeAsync(
+                            englishSet  
+                        );
                     await context.SaveChangesAsync();
                 }
             });
