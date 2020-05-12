@@ -12,7 +12,7 @@ namespace LogicBlock.Translations.Infrastructure.EntityConfiguration
         public void Configure(EntityTypeBuilder<T> builder)
         {
             builder
-                .ToTable(typeof(T).ToString());
+                .ToTable(typeof(T).Name);
 
             builder
                 .HasKey(l => l.Id);
