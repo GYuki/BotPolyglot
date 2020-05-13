@@ -16,9 +16,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
+using Receiver.API;
 using Receiver.API.Extensions;
 using Receiver.API.Infrastructure.LogicController;
 using Receiver.API.States;
+using StackExchange.Redis;
 
 namespace Receiver
 {
@@ -64,6 +67,18 @@ namespace Receiver
                     sqlOpt.MigrationsAssembly(typeof(Startup).GetTypeInfo().Assembly.GetName().Name);
                     sqlOpt.EnableRetryOnFailure(maxRetryCount: 15, maxRetryDelay: TimeSpan.FromSeconds(30), errorNumbersToAdd: null);
                 }));
+
+            services.AddSingleton<ConnectionMultiplexer>(sp =>
+            {
+                var settings = sp.GetRequiredService<IOptions<ReceiverSettings>>().Value;
+                var configuration = ConfigurationOptions.Parse(settings.ConnectionString, true);
+
+                configuration.ResolveDns = true;
+
+                return ConnectionMultiplexer.Connect(configuration);
+            });
+
+            services.AddTransient<ITranslationsRepository, RedisTranslationRepository>();
             
             string language = Configuration["Language"].FirstCharCapitalize();
 
