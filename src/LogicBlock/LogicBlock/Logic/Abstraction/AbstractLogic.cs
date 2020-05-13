@@ -11,10 +11,12 @@ namespace LogicBlock.Logic
     public abstract class AbstractLogic : ILogic
     {
         protected readonly ILanguageRepository _repository;
+        protected readonly ITranslationsRepository _translations;
         
-        public AbstractLogic(ILanguageRepository repository)
+        public AbstractLogic(ILanguageRepository repository, ITranslationsRepository translations)
         {
             _repository = repository;
+            _translations = translations;
         }
 
         public abstract Task<IResponseInfo> StartChat(IStartRequestInfo info);
@@ -34,9 +36,16 @@ namespace LogicBlock.Logic
         {
             if(info.Request.Session.WordSequence == null || info.Request.Session.ExpectedWord >= info.Request.Session.WordSequence.Count)
                 await GenerateSequenceAsync(info);
-            var result = await _repository.GetNextTask(info.Request.Session.WordSequence[info.Request.Session.ExpectedWord]);
 
-            return new AfterActionResponseInfo(result != null ? ResponseCodes.OK : ResponseCodes.LogicInternalError , result);
+            var next = await _repository.GetNextTask(info.Request.Session.WordSequence[info.Request.Session.ExpectedWord]);
+            
+            var text = await _translations.GetText("text_afterAction");
+
+            if (text == null)
+                return new AfterActionResponseInfo(ResponseCodes.LogicInternalError, "No Translation for text_afterAction");
+
+            var message = string.Format(text.Russian, next);
+            return new AfterActionResponseInfo(next != null ? ResponseCodes.OK : ResponseCodes.LogicInternalError , message);
         }
     }
 }

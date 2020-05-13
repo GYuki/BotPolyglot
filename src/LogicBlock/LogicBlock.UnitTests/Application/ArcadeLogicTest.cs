@@ -8,6 +8,7 @@ using LogicBlock.Translations.Model;
 using System.Collections.Generic;
 using LogicBlock.Logic;
 using LogicBlock.Utils;
+using LogicBlock.Translations.Model.Texts;
 
 namespace UnitTest.LogicBlock.Application
 {
@@ -15,10 +16,24 @@ namespace UnitTest.LogicBlock.Application
     public class ArcadeLogicTest
     {
         private readonly Mock<ILanguageRepository> _languageRepositoryMock;
+        private readonly Mock<ITranslationsRepository> _translationsRepositoryMock;
 
         public ArcadeLogicTest()
         {
             _languageRepositoryMock = new Mock<ILanguageRepository>();
+            _translationsRepositoryMock = new Mock<ITranslationsRepository>();
+        }
+
+        [SetUp]
+        public void Setup()
+        {
+            var fakeTranslation = new Text
+            {
+                Russian = "translation"
+            };
+
+            _translationsRepositoryMock.Setup(x => x.GetText(It.IsAny<string>()))
+                .Returns(Task.FromResult(fakeTranslation));
         }
 
         [Test]
@@ -35,7 +50,8 @@ namespace UnitTest.LogicBlock.Application
 
             // Act
             var arcadeLogic = new ArcadeLogic(
-                _languageRepositoryMock.Object
+                _languageRepositoryMock.Object,
+                _translationsRepositoryMock.Object
             );
 
             var result = await arcadeLogic.HandleText(fakeRequest);
@@ -59,7 +75,8 @@ namespace UnitTest.LogicBlock.Application
 
             // Act
             var arcadeLogic = new ArcadeLogic(
-                _languageRepositoryMock.Object
+                _languageRepositoryMock.Object,
+                _translationsRepositoryMock.Object
             );
             var result = await arcadeLogic.HandleText(fakeRequest);
 
@@ -76,17 +93,48 @@ namespace UnitTest.LogicBlock.Application
             var fakeRequest = CreateFakeTextRequest(fakeWord, fakeMessage, fakeSequence);
             var fakeTranslations = CreateFakeTranslations("wrong");
 
+            int lastKnownWordId = fakeRequest.Request.Session.ExpectedWord;
+
             _languageRepositoryMock.Setup(x => x.GetWordTranslationsAsync(It.IsAny<int>()))
                 .Returns(Task.FromResult(fakeTranslations));
 
             // Act
             var arcadeLogic = new ArcadeLogic(
-                _languageRepositoryMock.Object
+                _languageRepositoryMock.Object,
+                _translationsRepositoryMock.Object
             );
             var result = await arcadeLogic.HandleText(fakeRequest);
 
             // Assert
             Assert.AreEqual(result.ResponseCode, ResponseCodes.WrongAnswer);
+            Assert.AreNotEqual(fakeRequest.Request.Session.ExpectedWord, lastKnownWordId);
+        }
+
+        [Test]
+        public async Task Handle_Text_Wrong_Message_Last_Word()
+        {
+            var fakeWord = 1;
+            var fakeMessage = "fake";
+            var fakeSequence = new List<int>{ 1, 2 };
+            var fakeRequest = CreateFakeTextRequest(fakeWord, fakeMessage, fakeSequence);
+            var fakeTranslations = CreateFakeTranslations("wrong");
+
+            int lastKnownWordId = fakeRequest.Request.Session.ExpectedWord;
+
+            _languageRepositoryMock.Setup(x => x.GetWordTranslationsAsync(It.IsAny<int>()))
+                .Returns(Task.FromResult(fakeTranslations));
+
+            // Act
+            var arcadeLogic = new ArcadeLogic(
+                _languageRepositoryMock.Object,
+                _translationsRepositoryMock.Object
+            );
+            var result = await arcadeLogic.HandleText(fakeRequest);
+
+            // Assert
+            Assert.AreEqual(result.ResponseCode, ResponseCodes.WrongAnswer);
+            Assert.AreEqual(fakeRequest.Request.Session.ExpectedWord, 0);
+            Assert.IsNull(fakeRequest.Request.Session.WordSequence);
         }
 
         [Test]
@@ -99,7 +147,8 @@ namespace UnitTest.LogicBlock.Application
 
             // Act
             var arcadeLogic = new ArcadeLogic(
-                _languageRepositoryMock.Object
+                _languageRepositoryMock.Object,
+                _translationsRepositoryMock.Object
             );
 
             var result = await arcadeLogic.HandleText(fakeRequest);
@@ -128,7 +177,8 @@ namespace UnitTest.LogicBlock.Application
 
             // Act
             var arcadeLogic = new ArcadeLogic(
-                _languageRepositoryMock.Object
+                _languageRepositoryMock.Object,
+                _translationsRepositoryMock.Object
             );
 
             var result = await arcadeLogic.HandleText(fakeRequest);
@@ -151,7 +201,8 @@ namespace UnitTest.LogicBlock.Application
             
             // Act
             var arcadeLogic = new ArcadeLogic(
-                _languageRepositoryMock.Object
+                _languageRepositoryMock.Object,
+                _translationsRepositoryMock.Object
             );
 
             var result = await arcadeLogic.HandleText(fakeRequest);
@@ -174,7 +225,8 @@ namespace UnitTest.LogicBlock.Application
 
             // Act
             var arcadeLogic = new ArcadeLogic(
-                _languageRepositoryMock.Object
+                _languageRepositoryMock.Object,
+                _translationsRepositoryMock.Object
             );
 
             var result = await arcadeLogic.AfterAction(fakeRequest);

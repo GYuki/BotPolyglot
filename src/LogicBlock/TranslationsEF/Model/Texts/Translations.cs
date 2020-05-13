@@ -2,6 +2,6 @@ namespace LogicBlock.Translations.Model.Texts
 {
     public class Text
     {
-        string Russian { get; set; }
+        public string Russian { get; set; }
     }
 }

@@ -7,8 +7,8 @@ namespace LogicBlock.Logic
 {
     public class TutorialLogic : AbstractLogic, ITutorialLogic
     {
-        public TutorialLogic(ILanguageRepository repository)
-            : base(repository)
+        public TutorialLogic(ILanguageRepository repository, ITranslationsRepository translations)
+            : base(repository, translations)
         {
             
         }
