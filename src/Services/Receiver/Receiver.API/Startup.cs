@@ -68,6 +68,8 @@ namespace Receiver
                     sqlOpt.EnableRetryOnFailure(maxRetryCount: 15, maxRetryDelay: TimeSpan.FromSeconds(30), errorNumbersToAdd: null);
                 }));
 
+            services.Configure<ReceiverSettings>(Configuration);
+
             services.AddSingleton<ConnectionMultiplexer>(sp =>
             {
                 var settings = sp.GetRequiredService<IOptions<ReceiverSettings>>().Value;
