@@ -1,0 +1,38 @@
+version: '3.4'
+
+services:
+  mysqldata:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      
+  sessiondata:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+
+  receiver-api:
+    build:
+      context: .
+      dockerfile: Services/Receiver/Receiver.API/Dockerfile
+    environment:
+      - ConnectionString=sessiondata
+      - ConnectionStrings__connection=server=mysqldata;UserId=root;Password=root;database=translations;
+    ports:
+      - "80:80"
+    depends_on:
+      - sessiondata
+      - mysqldata
+  
+  session-api:
+    build:
+      context: .
+      dockerfile: Services/Session/Session.API/Dockerfile
+    environment:
+      - ConnectionString=sessiondata
+    ports:
+      - "81:80"
+    depends_on:
+      - sessiondata
