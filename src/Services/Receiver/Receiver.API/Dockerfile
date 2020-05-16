@@ -6,6 +6,8 @@ EXPOSE 80
 
 WORKDIR /src
 
+COPY ["LogicBlock/TranslationsEF/TranslationsEF.csproj", "LogicBlock/TranslationsEF/"]
+COPY ["LogicBlock/LogicBlock/LogicBlock.csproj", "LogicBlock/LogicBlock/"]
 COPY ["Services/Receiver/Receiver.API/Receiver.csproj", "Services/Receiver/Receiver.API/"]
 
 RUN dotnet restore Services/Receiver/Receiver.API/Receiver.csproj
