@@ -50,17 +50,18 @@ namespace ApiGateways.Telegram.Sender.Controllers
                 SessionData = currentSession
             });
 
-            message += receiverResponse.Message + "\n";
+            message += receiverResponse.Message;
 
             currentSession.Update(receiverResponse.SessionData);
 
             var afterAction = await _receiver.HandleAfterActionRequestAsync(currentSession);
 
-            message += afterAction.Message;
+            if (afterAction != null)
+                message += "\n" + afterAction.Message;
 
             await _session.UpdateOrCreateSessionAsync(currentSession);
 
-            await _telegram.SendTextMessageAsync(token, update.Message.Chat.Id, message);
+            // await _telegram.SendTextMessageAsync(token, update.Message.Chat.Id, message);
 
             return Ok();
         }

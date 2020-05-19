@@ -72,5 +72,11 @@
             "request": "attach",
             "processId": "${command:pickProcess}"
         }
+    ],
+    "compounds": [
+        {
+            "name": "Complex setup",
+            "configurations": [".NET Core Launch (Receiver)", ".NET Core Launch (Session)", ".NET Core Launch (Telegram)"]
+        }
     ]
 }
