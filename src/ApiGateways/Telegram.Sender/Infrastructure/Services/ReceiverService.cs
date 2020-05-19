@@ -77,7 +77,7 @@ namespace ApiGateways.Telegram.Sender.Infrastructure.Services
             var result = new GrpcReceiver.ChatRequest
             {
                 ExpectedWord = session.ExpectedWord,
-                Language = session.Language,
+                Language = session.Language ?? "",
                 State = (int)session.State
             };
 

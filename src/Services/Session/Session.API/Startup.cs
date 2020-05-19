@@ -33,11 +33,6 @@ namespace Session.API
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddGrpc(options => 
-            {
-                options.EnableDetailedErrors = true;
-            });
-
             services.Configure<KestrelServerOptions>(options => {
                 var ports = GetDefinedPorts(Configuration);
                 options.Listen(IPAddress.Any, ports.httpPort, listenOptions =>
@@ -49,6 +44,11 @@ namespace Session.API
                 {
                     listenOptions.Protocols = HttpProtocols.Http2;
                 });
+            });
+
+            services.AddGrpc(options => 
+            {
+                options.EnableDetailedErrors = true;
             });
 
             services.Configure<SessionSettings>(Configuration);
@@ -84,6 +84,7 @@ namespace Session.API
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapGrpcService<GrpcSession.SessionService>();
                 endpoints.MapDefaultControllerRoute();
             });
         }

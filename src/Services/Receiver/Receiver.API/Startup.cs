@@ -124,7 +124,7 @@ namespace Receiver
         private (int httpPort, int grpcPort) GetDefinedPorts(IConfiguration config)
         {
             var port = config.GetValue("PORT", 80);
-            var grpcPort = config.GetValue("GRPC_PORT", 5001);
+            var grpcPort = config.GetValue("GRPC_PORT", 5002);
             return (port, grpcPort);
         }
     }
