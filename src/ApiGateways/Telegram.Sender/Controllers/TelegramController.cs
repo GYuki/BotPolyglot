@@ -61,7 +61,7 @@ namespace ApiGateways.Telegram.Sender.Controllers
 
             await _session.UpdateOrCreateSessionAsync(currentSession);
 
-            // await _telegram.SendTextMessageAsync(token, update.Message.Chat.Id, message);
+            await _telegram.SendTextMessageAsync(token, update.Message.Chat.Id, message);
 
             return Ok();
         }
