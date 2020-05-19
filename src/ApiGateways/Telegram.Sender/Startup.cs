@@ -23,7 +23,7 @@ namespace Telegram.Sender
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
+                .AddJsonFile($"appsettings.localhost.json", optional: true)
                 .AddEnvironmentVariables();
             Configuration = builder.Build();
         }
@@ -42,7 +42,7 @@ namespace Telegram.Sender
 
             services.AddHttpServices();
             services.AddControllers();
-            services.AddCustomMvc();
+            services.AddCustomMvc(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
