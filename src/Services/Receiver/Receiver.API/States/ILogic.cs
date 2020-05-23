@@ -7,8 +7,8 @@ namespace Receiver.API.States
     public interface ILogic
     {
         Task<ResponseModel> Act(string message, ChatSession session);
-        string Back(ChatSession session);
-        string Menu(ChatSession session);
+        Task<string> Back(ChatSession session);
+        Task<string> Menu(ChatSession session);
     }
 
     public interface IIdleLogic : ILogic {}

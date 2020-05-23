@@ -16,33 +16,33 @@ namespace Receiver.API.States
             _translation = translation;
         }
 
-        public override Task<ResponseModel> Act(string message, LogicBlock.Session.ChatSession session)
+        public async override Task<ResponseModel> Act(string message, LogicBlock.Session.ChatSession session)
         {
             var result = new ResponseModel();
             switch(message)
             {
                 case "arcade":
                     session.State = State.ArcadeAction;
-                    result.Message = "Start arcade";
+                    result.Message = (await _translation.GetText("start_arcade")).Russian;
                     break;
                 case "tutorial":
                     session.State = State.TutorialAction;
-                    result.Message = "Start tutorial";
+                    result.Message = (await _translation.GetText("start_tutorial")).Russian;
                     break;
                 default:
-                    result.Message = "Choose mode";
+                    result.Message = (await _translation.GetText("choose_mode")).Russian;
                     break;
             };
 
             result.Session = session;
-            return Task.FromResult(result);
+            return result;
         }
 
-        public override string Back(ChatSession session)
+        public async override Task<string> Back(ChatSession session)
         {
             session.State = State.LanguageChoose;
             session.Language = null;
-            return "Language list";
+            return (await _translation.GetText("language_list")).Russian;
         }
     }
 }

@@ -11,7 +11,7 @@ namespace Receiver.API.States
             :base(translation)
         {
         }
-        public override Task<ResponseModel> Act(string message, ChatSession session)
+        public async override Task<ResponseModel> Act(string message, ChatSession session)
         {
             var result = new ResponseModel();
 
@@ -19,17 +19,17 @@ namespace Receiver.API.States
             {
                 case "language":
                     session.State = State.LanguageChoose;
-                    result.Message = "Choose language";
+                    result.Message = (await _translation.GetText("choose_language")).Russian;
                     break;
                 case "help":
-                    result.Message = "Help info";
+                    result.Message = (await _translation.GetText("help_info")).Russian;
                     break;
                 default:
-                    result.Message = "Idle message";
+                    result.Message = (await _translation.GetText("idle_message")).Russian;
                     break;
             }
             result.Session = session;
-            return Task.FromResult(result);
+            return result;
         }
     }
 }

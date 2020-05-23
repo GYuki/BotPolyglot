@@ -16,16 +16,16 @@ namespace Receiver.API.States
             _translation = translation;
         }
 
-        public virtual string Back(ChatSession session)
+        public virtual Task<string> Back(ChatSession session)
         {
             return null;
         }
-        public string Menu(ChatSession session)
+        public async Task<string> Menu(ChatSession session)
         {
             session.State = State.Idle;
             session.ExpectedWord = 0;
             session.WordSequence = null;
-            return "Idle message";
+            return (await _translation.GetText("idle_message")).Russian;
         }
     }
 }
