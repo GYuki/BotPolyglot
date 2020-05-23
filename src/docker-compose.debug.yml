@@ -20,8 +20,7 @@ services:
     environment:
       - ConnectionString=sessiondata
       - ConnectionStrings__connection=server=mysqldata;UserId=root;Password=root;database=translations;
-    ports:
-      - "80:80"
+      - GRPC_PORT=5001
     depends_on:
       - sessiondata
       - mysqldata
@@ -32,7 +31,23 @@ services:
       dockerfile: Services/Session/Session.API/Dockerfile
     environment:
       - ConnectionString=sessiondata
-    ports:
-      - "81:80"
+      - GRPC_PORT=5001
     depends_on:
       - sessiondata
+  
+  telegram-api-agg:
+    build:
+      context: .
+      dockerfile: ApiGateways/Telegram.Sender/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - urls__session=http://session-api:5001
+      - urls__receiver=http://receiver-api:5001
+      - PORT=80
+    ports:
+      - "80:80"
+    depends_on:
+      - mysqldata
+      - sessiondata
+      - session-api
+      - receiver-api
