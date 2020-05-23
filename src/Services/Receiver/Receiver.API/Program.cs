@@ -40,6 +40,16 @@ namespace Receiver
                     .Wait();
             });
 
+            host.MigrateRedisDatabase((redis, services) =>
+            {
+                var env = services.GetService<IHostEnvironment>();
+                var logger = services.GetService<ILogger<TextManagerSeed>>();
+
+                new TextManagerSeed()
+                    .SeedAsync(redis, env.ContentRootPath, logger)
+                    .Wait();
+            });
+
             host.Run();
         }
 
