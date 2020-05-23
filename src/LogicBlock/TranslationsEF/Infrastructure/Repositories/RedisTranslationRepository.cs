@@ -19,12 +19,18 @@ namespace LogicBlock.Translations.Infrastructure.Repositories
         public async Task<Text> GetText(string key)
         {
             if (string.IsNullOrEmpty(key))
-                return null;
+                return new Text
+                {
+                    Russian = key
+                };
             
             var text = await _database.StringGetAsync(key);
 
             if (text.IsNullOrEmpty)
-                return null;
+                return new Text
+                {
+                    Russian = key
+                };
 
             return JsonConvert.DeserializeObject<Text>(text);
         }
