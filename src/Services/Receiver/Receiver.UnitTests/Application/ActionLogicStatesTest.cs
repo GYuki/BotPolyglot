@@ -3,6 +3,8 @@ using System.Threading.Tasks;
 using LogicBlock.Info;
 using LogicBlock.Logic;
 using LogicBlock.Session;
+using LogicBlock.Translations.Infrastructure.Repositories;
+using LogicBlock.Translations.Model.Texts;
 using LogicBlock.Utils;
 using Moq;
 using NUnit.Framework;
@@ -14,10 +16,24 @@ namespace UnitTest.Receiver.Application
     public class ActionLogicStatesTest
     {
         private readonly Mock<LogicBlock.Logic.IArcadeLogic> _logicMock;
+        private readonly Mock<ITranslationsRepository> _logicTranslations;
 
         public ActionLogicStatesTest()
         {
             _logicMock = new Mock<LogicBlock.Logic.IArcadeLogic>();
+            _logicTranslations = new Mock<ITranslationsRepository>();
+        }
+
+        [SetUp]
+        public void Setup()
+        {
+            var message = new Text
+            {
+                Russian = "translation"
+            };
+            
+            _logicTranslations.Setup(x => x.GetText(It.IsAny<string>()))
+                .Returns(Task.FromResult(message));
         }
 
         [Test]
@@ -40,7 +56,8 @@ namespace UnitTest.Receiver.Application
 
             // Act
             var logicState = new ArcadeActionLogic(
-                _logicMock.Object
+                _logicMock.Object,
+                _logicTranslations.Object
             );
 
             var actionResult = await logicState.Act(fakeMessage, fakeSession);
@@ -67,7 +84,8 @@ namespace UnitTest.Receiver.Application
 
             // Act
             var logic = new ArcadeActionLogic(
-                _logicMock.Object
+                _logicMock.Object,
+                _logicTranslations.Object
             );
 
             var actionResult = await logic.Act(fakeMessage, fakeSession);
@@ -91,7 +109,8 @@ namespace UnitTest.Receiver.Application
             
             // Act
             var logic = new ArcadeActionLogic(
-                _logicMock.Object
+                _logicMock.Object,
+                _logicTranslations.Object
             );
 
             var actionResult = logic.Menu(fakeSession);

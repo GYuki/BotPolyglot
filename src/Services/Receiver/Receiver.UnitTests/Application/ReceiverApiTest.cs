@@ -7,6 +7,8 @@ using Receiver.API.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using Receiver.API.States;
+using LogicBlock.Translations.Infrastructure.Repositories;
+using LogicBlock.Translations.Model.Texts;
 
 namespace UnitTest.Receiver.Application
 {
@@ -14,10 +16,24 @@ namespace UnitTest.Receiver.Application
     public class ReceiverApiTest
     {
         private readonly Mock<ILogicController> _logicControllerMock;
+        private readonly Mock<ITranslationsRepository> _logicTranslationMock;
 
         public ReceiverApiTest()
         {
             _logicControllerMock = new Mock<ILogicController>();
+            _logicTranslationMock = new Mock<ITranslationsRepository>();
+        }
+
+        [SetUp]
+        public void Setup()
+        {
+            var message = new Text
+            {
+                Russian = "translation"
+            };
+
+            _logicTranslationMock.Setup(x => x.GetText(It.IsAny<string>()))
+                .Returns(Task.FromResult(message));
         }
 
         [Test]
@@ -139,7 +155,7 @@ namespace UnitTest.Receiver.Application
 
         private ILogic GetFakeLogic()
         {
-            return new IdleLogic();
+            return new IdleLogic(_logicTranslationMock.Object);
         }
     }
 }
