@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using LogicBlock.Session;
+using LogicBlock.Translations.Infrastructure.Repositories;
 using Receiver.API.Models;
 
 namespace Receiver.API.States
@@ -8,6 +9,13 @@ namespace Receiver.API.States
     public class LanguageChooseLogic : BaseLogic, ILanguageLogic
     {
         private readonly string[] _languageList = new string[] { "en" };
+
+        public LanguageChooseLogic(ITranslationsRepository translation)
+            :base(translation)
+        {
+            
+        }
+
         public override Task<ResponseModel> Act(string message, LogicBlock.Session.ChatSession session)
         {
             var result = new ResponseModel();

@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using LogicBlock.Session;
+using LogicBlock.Translations.Infrastructure.Repositories;
 using Receiver.API.Models;
 
 namespace Receiver.API.States
@@ -8,6 +9,13 @@ namespace Receiver.API.States
     public class ModeChooseLogic : BaseLogic, IModeChooseLogic
     {
         private readonly string[] _modeList = new string[] { "arcade", "tutorial" };
+
+        public ModeChooseLogic(ITranslationsRepository translation)
+            :base(translation)
+        {
+            _translation = translation;
+        }
+
         public override Task<ResponseModel> Act(string message, LogicBlock.Session.ChatSession session)
         {
             var result = new ResponseModel();

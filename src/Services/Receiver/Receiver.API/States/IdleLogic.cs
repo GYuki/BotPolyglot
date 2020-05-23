@@ -1,11 +1,16 @@
 using System.Threading.Tasks;
 using LogicBlock.Session;
+using LogicBlock.Translations.Infrastructure.Repositories;
 using Receiver.API.Models;
 
 namespace Receiver.API.States
 {
     public class IdleLogic : BaseLogic, IIdleLogic
     {
+        public IdleLogic(ITranslationsRepository translation)
+            :base(translation)
+        {
+        }
         public override Task<ResponseModel> Act(string message, ChatSession session)
         {
             var result = new ResponseModel();

@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using LogicBlock.Info;
 using LogicBlock.Logic;
 using LogicBlock.Session;
+using LogicBlock.Translations.Infrastructure.Repositories;
 using LogicBlock.Utils;
 using Receiver.API.Models;
 
@@ -9,8 +10,8 @@ namespace Receiver.API.States
 {
     public class ArcadeActionLogic : BaseActionLogic, IArcadeActionLogic
     {
-        public ArcadeActionLogic(IArcadeLogic arcade)
-            :base(arcade)
+        public ArcadeActionLogic(IArcadeLogic arcade, ITranslationsRepository translation)
+            :base(arcade, translation)
         {       
         }
         public override async Task<ResponseModel> Act(string message, ChatSession session)

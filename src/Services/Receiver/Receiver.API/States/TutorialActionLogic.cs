@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using LogicBlock.Info;
 using LogicBlock.Logic;
 using LogicBlock.Session;
+using LogicBlock.Translations.Infrastructure.Repositories;
 using LogicBlock.Utils;
 using Receiver.API.Models;
 
@@ -9,8 +10,8 @@ namespace Receiver.API.States
 {
     public class TutorialActionLogic : BaseActionLogic, ITutorialActionLogic
     {
-        public TutorialActionLogic(ITutorialLogic tutorial)
-            :base(tutorial)
+        public TutorialActionLogic(ITutorialLogic tutorial, ITranslationsRepository translation)
+            :base(tutorial, translation)
         {
         }
 
