@@ -110,6 +110,10 @@ namespace Receiver
                 app.UseDeveloperExceptionPage();
             }
 
+            var prefix = Configuration["Language"].ToLower();
+
+            app.UsePathBase($"/{prefix}");
+
             app.UseHttpsRedirection();
 
             app.UseRouting();
