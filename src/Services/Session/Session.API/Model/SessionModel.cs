@@ -14,5 +14,6 @@ namespace Session.API.Model
 
         public State State { get; set; }
         public string Language { get; set; }
+        public int Award { get; set; }
     }
 }

@@ -54,6 +54,7 @@ namespace LogicBlock.Logic
                         info.Request.Session.ExpectedWord++;
 
                     var success = await _translations.GetText("text_success");
+                    info.Request.Session.Award += t.Word.Award;
                     return new ArcadeResponseInfo(success.Russian, ResponseCodes.OK, t.Word.Award);
                 }
             }
@@ -67,6 +68,8 @@ namespace LogicBlock.Logic
                 info.Request.Session.ExpectedWord++;
             
             var wrongAnswer = await _translations.GetText("text_wrongAnswer");
+            info.Request.Session.Award = 0;
+
             return new ArcadeResponseInfo(
                 string.Format(wrongAnswer.Russian, string.Join(", ", translations.Select(x => x.Translation))),
                 ResponseCodes.WrongAnswer);            

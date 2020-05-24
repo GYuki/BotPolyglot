@@ -53,7 +53,8 @@ namespace ApiGateways.Telegram.Sender.Infrastructure.Services
                 ChatId = sessionData.ChatId,
                 ExpectedWord = sessionData.ExpectedWord,
                 State = (GrpcSession.State)sessionData.State,
-                Language = sessionData.Language
+                Language = sessionData.Language,
+                Award = sessionData.Award
             };
 
             if (sessionData.WordSequence != null)
@@ -72,7 +73,8 @@ namespace ApiGateways.Telegram.Sender.Infrastructure.Services
                 ExpectedWord = request.ExpectedWord,
                 State = (Models.State)request.State,
                 Language = request.Language,
-                WordSequence = request.WordSequence != null ? request.WordSequence.ToList() : default
+                WordSequence = request.WordSequence != null ? request.WordSequence.ToList() : default,
+                Award = request.Award
             };
         }
     }

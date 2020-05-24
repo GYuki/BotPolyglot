@@ -23,6 +23,7 @@ message SessionRequest {
     int64 chatId = 4;
     State state = 5;
     string language = 6;
+    int32 award = 7;
 }
 
 enum AuthType {
