@@ -44,9 +44,21 @@ namespace ApiGateways.Telegram.Sender.Controllers
                 State = State.Idle
             };
 
+            var messageText = "";
+
+            if (update.Message.Entities != null)
+            {
+                messageText = update.Message.Text.Substring(
+                    update.Message.Entities[0].Offset,
+                    update.Message.Entities[0].Length
+                );
+            }
+            else
+                messageText = update.Message.Text;
+
             var receiverResponse = await _receiver.HandleReceiverRequestAsync(new ActionRequest
             {
-                Message = update.Message.Text,
+                Message = messageText,
                 SessionData = currentSession
             });
 
