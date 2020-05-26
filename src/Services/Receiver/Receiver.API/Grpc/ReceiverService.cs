@@ -55,6 +55,7 @@ namespace GrpcReceiver
                     break;
             }
 
+            response.Session = MapToChatRequest(chatSession);
             context.Status = new Status(StatusCode.OK, $"Success action");
             return response;
         }
@@ -103,7 +104,8 @@ namespace GrpcReceiver
                 State = (int)session.State
             };
 
-            session.WordSequence.ForEach(word => result.WordSequence.Add(word));
+            if (session.WordSequence != null)
+                session.WordSequence.ForEach(word => result.WordSequence.Add(word));
 
             return result;
         }
@@ -114,7 +116,6 @@ namespace GrpcReceiver
             return new ChatResponse
             {
                 Message = model.Message,
-                Session = MapToChatRequest(model.Session),
                 Success = model.Success
             };
         }
