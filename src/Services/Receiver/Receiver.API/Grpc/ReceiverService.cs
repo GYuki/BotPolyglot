@@ -43,10 +43,10 @@ namespace GrpcReceiver
 
             switch(action.Message)
             {
-                case "back":
+                case "/back":
                     response.Message = await currentState.Back(chatSession);
                     break;
-                case "menu":
+                case "/menu":
                     response.Message = await currentState.Menu(chatSession);
                     break;
                 default:

@@ -38,10 +38,10 @@ namespace Receiver.API.Controllers
 
             switch(message)
             {
-                case "back":
+                case "/back":
                     result.Message = await currentState.Back(session);
                     break;
-                case "menu":
+                case "/menu":
                     result.Message = await currentState.Menu(session);
                     break;
                 default:

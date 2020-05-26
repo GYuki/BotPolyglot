@@ -17,11 +17,11 @@ namespace Receiver.API.States
 
             switch (message)
             {
-                case "language":
+                case "/language":
                     session.State = State.LanguageChoose;
                     result.Message = (await _translation.GetText("choose_language")).Russian;
                     break;
-                case "help":
+                case "/help":
                     result.Message = (await _translation.GetText("help_info")).Russian;
                     break;
                 default:

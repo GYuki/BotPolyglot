@@ -21,11 +21,11 @@ namespace Receiver.API.States
             var result = new ResponseModel();
             switch(message)
             {
-                case "arcade":
+                case "/arcade":
                     session.State = State.ArcadeAction;
                     result.Message = (await _translation.GetText("start_arcade")).Russian;
                     break;
-                case "tutorial":
+                case "/tutorial":
                     session.State = State.TutorialAction;
                     result.Message = (await _translation.GetText("start_tutorial")).Russian;
                     break;
