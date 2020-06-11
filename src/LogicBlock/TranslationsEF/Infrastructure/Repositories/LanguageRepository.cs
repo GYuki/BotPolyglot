@@ -31,9 +31,9 @@ namespace LogicBlock.Translations.Infrastructure.Repositories
                                             .Set<T>()
                                             .Where(l => l.WordId == wordId)
                                             .Include(l => l.Word)
-                                            .ToListAsync() as List<ILanguage>;
+                                            .ToListAsync();
 
-            return translations;                    
+            return new List<ILanguage>(translations);
         }
 
         public async Task<string> GetNextTask(int wordId)
