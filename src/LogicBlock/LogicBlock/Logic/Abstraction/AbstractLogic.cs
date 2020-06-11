@@ -25,7 +25,7 @@ namespace LogicBlock.Logic
         protected async Task GenerateSequenceAsync(IRequestInfo info)
         {
             int wordsCount = await _repository.GetWordsCountAsync();
-            var wordSequence = Enumerable.Range(0, wordsCount - 1).ToList();
+            var wordSequence = Enumerable.Range(1, wordsCount).ToList();
             wordSequence.Shuffle();
             
             info.OperationRequest.Session.ExpectedWord = 0;
