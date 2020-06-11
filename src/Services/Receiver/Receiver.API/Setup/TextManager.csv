@@ -1,2 +1,12 @@
 key,russian
 idle_message,Приветствие
+text_afterAction,Следующее слово: {0}
+text_start,Начало игры
+text_noTranslations,Перевода не найдено! Обратитесь к разработчикам!
+text_success,Верно!
+text_wrongAnswer,Неправильно!
+choose_language,Выберите язык для практики: {0}
+choose_mode,Выберите режим практики: {0}
+start_arcade,Режим аркады
+start_tutorial,Режим тренировки
+language_list,Список доступных для практики языков: {0}
