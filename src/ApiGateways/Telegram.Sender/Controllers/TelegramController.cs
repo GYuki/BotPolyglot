@@ -69,8 +69,11 @@ namespace ApiGateways.Telegram.Sender.Controllers
             var afterAction = await _receiver.HandleAfterActionRequestAsync(currentSession);
 
             if (afterAction != null)
+            {
                 message += "\n" + afterAction.Message;
-
+                currentSession.Update(afterAction.SessionData);
+            }
+            
             await _session.UpdateOrCreateSessionAsync(currentSession);
 
             await _telegram.SendTextMessageAsync(token, update.Message.Chat.Id, message);
