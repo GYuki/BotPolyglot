@@ -67,7 +67,8 @@ namespace GrpcSession
                 ExpectedWord = request.ExpectedWord,
                 State = (models.State)request.State,
                 WordSequence = request.WordSequence.ToList(),
-                Award = request.Award
+                Award = request.Award,
+                Language = request.Language
             };
         }
 
@@ -79,7 +80,8 @@ namespace GrpcSession
                 ChatId = session.ChatId,
                 ExpectedWord = session.ExpectedWord,
                 State = (State)session.State,
-                Award = session.Award
+                Award = session.Award,
+                Language = session.Language
             };
 
             session.WordSequence.ForEach(x => result.WordSequence.Add(x));

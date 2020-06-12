@@ -100,7 +100,7 @@ namespace GrpcReceiver
             var result = new ChatRequest
             {
                 ExpectedWord = session.ExpectedWord,
-                Language = session.Language,
+                Language = session.Language ?? "",
                 State = (int)session.State
             };
 
