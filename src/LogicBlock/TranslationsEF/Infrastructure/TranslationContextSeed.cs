@@ -25,7 +25,7 @@ namespace LogicBlock.Translations.Infrastructure
                 if (!context.Words.Any()) // ONLY FOR FIRST LAUNCH
                 {
                     await context.Words.AddRangeAsync(
-                        GetWords(1000)
+                        GetWords(2)
                     );
                     
                     await context.SaveChangesAsync();
@@ -33,10 +33,20 @@ namespace LogicBlock.Translations.Infrastructure
 
                 if (!context.Set<EnLanguage>().Any())
                 {
-                    var englishSet = GetEnglishTranslations(contentRootPath, context, logger);
+                    var englishSet = GetTranslations<EnLanguage>("English", contentRootPath, context, logger);
                     if (englishSet != null)
                         await context.Set<EnLanguage>().AddRangeAsync(
                             englishSet  
+                        );
+                    await context.SaveChangesAsync();
+                }
+
+                if (!context.Set<RuLanguage>().Any())
+                {
+                    var russianSet = GetTranslations<RuLanguage>("Russian", contentRootPath, context, logger);
+                    if (russianSet != null)
+                        await context.Set<RuLanguage>().AddRangeAsync(
+                            russianSet  
                         );
                     await context.SaveChangesAsync();
                 }
@@ -50,18 +60,18 @@ namespace LogicBlock.Translations.Infrastructure
                     });
         }
 
-        private IEnumerable<EnLanguage> GetEnglishTranslations(string contentRootPath, TranslationContext context, ILogger<TranslationContextSeed> logger)
+        private IEnumerable<TLanguage> GetTranslations<TLanguage>(string language, string contentRootPath, TranslationContext context, ILogger<TranslationContextSeed> logger) where TLanguage : AbstractLanguage, new()
         {
-            string csvFileEnglishTranslations = Path.Combine(contentRootPath, "Setup", "English.csv");
+            string csvFileTranslations = Path.Combine(contentRootPath, "Setup", $"{language}.csv");
 
-            if (!File.Exists(csvFileEnglishTranslations))
+            if (!File.Exists(csvFileTranslations))
                 return null;
 
             string[] csvHeaders;
             try
             {
                 string[] requiredHeaders = { "translation", "wordid" };
-                csvHeaders = GetHeaders(csvFileEnglishTranslations, requiredHeaders);
+                csvHeaders = GetHeaders(csvFileTranslations, requiredHeaders);
             }
             catch (Exception e)
             {
@@ -71,10 +81,10 @@ namespace LogicBlock.Translations.Infrastructure
 
             var wordIdsLookup = context.Words.Select(x => x.Id).ToArray();
     
-            return File.ReadAllLines(csvFileEnglishTranslations)
+            return File.ReadAllLines(csvFileTranslations)
                                         .Skip(1)
                                         .Select(row => Regex.Split(row, ",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)"))
-                                        .SelectTry(column => CreateTranslation<EnLanguage>(column, csvHeaders, wordIdsLookup))
+                                        .SelectTry(column => CreateTranslation<TLanguage>(column, csvHeaders, wordIdsLookup))
                                         .OnCaughtException(ex => { logger.LogError(ex, "EXCEPTION ERROR: {Message}", ex.Message); return null; })
                                         .Where(x => x != null);
         }
