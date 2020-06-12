@@ -33,7 +33,7 @@ namespace ApiGateways.Telegram.Sender.Infrastructure.Services
 
         public async Task<ReceiverResponse> HandleReceiverRequestAsync(Models.ActionRequest actionRequest)
         {
-            return await GrpcCallerService.CallService(_urls.Receiver, async channel =>
+            return await GrpcCallerService.CallService(_urls.Receivers(actionRequest.SessionData.Language), async channel =>
             {
                var client = new ReceiverClient(channel);
                var request = MapToGrpcActionRequest(actionRequest);
